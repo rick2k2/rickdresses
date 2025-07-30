@@ -1,10 +1,9 @@
+// /utils/axiosConfig.js
 import axios from "axios";
 import { getToken } from "./auth";
 
-const API_URL =
-  process.env.REACT_APP_API_BASE_URL === "production"
-    ? "https://rd-backend-jb01.onrender.com/api"
-    : "http://localhost:5000/api";
+// Base URL from env
+const API_URL = process.env.REACT_APP_API_BASE_URL;
 
 const instance = axios.create({
   baseURL: API_URL,
