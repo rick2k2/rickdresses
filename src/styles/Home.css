@@ -1,0 +1,70 @@
+.home_page {
+  background-color: #ffffff;
+  color: #333;
+  font-family: "Segoe UI", sans-serif;
+  overflow-x: hidden;
+  padding: 0;
+}
+
+.scroll-to-top {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background-color: #ff6600;
+  border: none;
+  color: #fff;
+  padding: 12px;
+  font-size: 18px;
+  border-radius: 50%;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  z-index: 1000;
+}
+
+.scroll-to-top:hover {
+  background-color: #fa640d;
+  transform: scale(1.1);
+}
+
+/* Optional: Give sections some padding */
+.home-page > * {
+  margin-bottom: 40px;
+  animation: fadeInUp 0.8s ease both;
+}
+
+/* Smooth fade up animation for sections */
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Optional: Section Headings Style */
+.home_page h2,
+.home_page h3 {
+  color: #ff6600;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Add modern button style */
+button {
+  background-color: #ff6600;
+  color: #fff;
+  border: none;
+  padding: 10px 22px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+button:hover {
+  background-color: #e65c00;
+  transform: translateY(-2px);
+}

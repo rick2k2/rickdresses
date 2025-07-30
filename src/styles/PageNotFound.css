@@ -1,0 +1,53 @@
+/* src/styles/NotFound.css */
+.notfound-container {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(to right, #ffecd2, #fcb69f);
+  font-family: "Segoe UI", sans-serif;
+  padding: 20px;
+}
+
+.notfound-box {
+  text-align: center;
+  background-color: white;
+  padding: 40px;
+  border-radius: 16px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  border: 2px dashed orange;
+  max-width: 400px;
+  width: 100%;
+}
+
+.notfound-box h1 {
+  font-size: 5rem;
+  color: #ff6a00;
+  margin: 0;
+}
+
+.notfound-box h2 {
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.notfound-box p {
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+.notfound-box button {
+  padding: 10px 20px;
+  background-color: #ff6a00;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.notfound-box button:hover {
+  background-color: #e65c00;
+}

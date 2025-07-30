@@ -1,0 +1,12 @@
+.slider-wrapper {
+  width: 100%;
+  /* height: 400px; */
+  overflow: hidden;
+}
+
+.slider-wrapper img {
+  width: 100%;
+  height: 100%;
+  /* object-fit: cover; */
+  border-bottom: 4px solid #f97316;
+}

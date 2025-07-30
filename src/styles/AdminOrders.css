@@ -1,0 +1,98 @@
+.admin-orders-container {
+  padding: 20px;
+  max-width: 98%;
+  margin: auto;
+  font-family: "Segoe UI", sans-serif;
+}
+
+.admin-orders-container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #ff6600;
+}
+
+.admin-orders-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(255, 102, 0, 0.2);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.admin-orders-table th,
+.admin-orders-table td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #f0f0f0;
+  vertical-align: top;
+}
+
+.admin-orders-table thead {
+  background-color: #ff6600;
+  color: white;
+}
+
+.admin-orders-table tbody tr:hover {
+  background-color: #fff5e6;
+}
+
+.admin-orders-table ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+.admin-orders-table li {
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+.deliver-btn,
+.delete-btn {
+  padding: 6px 10px;
+  margin: 4px 4px 0 0;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: 0.2s ease-in-out;
+}
+
+.deliver-btn {
+  background-color: #28a745;
+  color: white;
+}
+
+.deliver-btn:disabled {
+  background-color: #b0e6c5;
+  cursor: not-allowed;
+}
+
+.delete-btn {
+  background-color: #dc3545;
+  color: white;
+}
+
+.deliver-btn:hover:not(:disabled),
+.delete-btn:hover {
+  transform: scale(1.05);
+  opacity: 0.9;
+}
+
+@media (max-width: 768px) {
+  .admin-orders-table {
+    font-size: 13px;
+  }
+
+  .admin-orders-table th,
+  .admin-orders-table td {
+    padding: 8px;
+  }
+
+  .deliver-btn,
+  .delete-btn {
+    padding: 5px 8px;
+    font-size: 12px;
+  }
+}

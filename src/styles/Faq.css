@@ -1,0 +1,49 @@
+.page-container-faq {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 20px;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  color: #333;
+}
+
+.page-container-faq h2 {
+  text-align: center;
+  font-size: 32px;
+  color: #f97316;
+  margin-bottom: 40px;
+}
+
+.faq-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.faq-card {
+  background-color: #fff7ed;
+  border: 1px solid #fcd9b6;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease;
+}
+
+.faq-card:hover {
+  transform: translateY(-4px);
+}
+
+.faq-card h4 {
+  margin-bottom: 10px;
+  color: #e85d04;
+  font-size: 20px;
+}
+
+.faq-card p {
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.faq-card a {
+  color: #f97316;
+  text-decoration: underline;
+}

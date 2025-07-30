@@ -1,0 +1,20 @@
+.admin-products {
+  padding: 2rem;
+  text-align: center;
+}
+.admin-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+.btn {
+  padding: 10px 20px;
+  background: orange;
+  color: white;
+  border-radius: 6px;
+  text-decoration: none;
+}
+.btn:hover {
+  background: orangered;
+}

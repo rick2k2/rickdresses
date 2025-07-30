@@ -1,0 +1,36 @@
+/* AdminRoute.css */
+
+.admin-restrict-container {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff3f3;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+}
+
+.admin-restrict-box {
+  background-color: #fff;
+  padding: 2rem 3rem;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(255, 102, 0, 0.2);
+  max-width: 400px;
+}
+
+.admin-restrict-box h2 {
+  color: #ff3300;
+  margin-bottom: 0.5rem;
+}
+
+.admin-restrict-box p {
+  font-size: 1.2rem;
+  margin-bottom: 1.5rem;
+  color: #333;
+}
+
+.admin-restrict-img {
+  width: 100%;
+  max-width: 300px;
+  border-radius: 8px;
+}

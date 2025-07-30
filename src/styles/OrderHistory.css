@@ -1,0 +1,110 @@
+.order-history-page {
+  padding: 20px;
+  max-width: 1100px;
+  margin: auto;
+  background-color: #fff8f1;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(255, 165, 0, 0.2);
+}
+
+.order-history-page h2 {
+  color: #ff6600;
+  font-size: 28px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.order-count {
+  font-size: 16px;
+  color: #333;
+  font-weight: 500;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.order-history-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.05);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.order-history-table th,
+.order-history-table td {
+  padding: 12px 16px;
+  text-align: center;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.order-history-table th {
+  background-color: #ff6600;
+  color: white;
+  font-weight: 600;
+}
+
+.order-history-table td {
+  color: #333;
+  font-size: 15px;
+}
+
+.status-tag {
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  display: inline-block;
+}
+
+.status-tag.delivered {
+  background-color: #d1f7d6;
+  color: #2e7d32;
+}
+
+.status-tag.pending {
+  background-color: #fff0d8;
+  color: #ff6600;
+}
+
+.cancel-btn {
+  background-color: #ff3300;
+  color: white;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.cancel-btn:hover {
+  background-color: #cc2200;
+}
+
+.no-action {
+  color: #aaa;
+}
+
+.order-loading,
+.order-error {
+  text-align: center;
+  font-size: 16px;
+  color: #555;
+  margin-top: 40px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .order-history-table {
+    font-size: 13px;
+  }
+
+  .order-history-table th,
+  .order-history-table td {
+    padding: 10px 8px;
+  }
+
+  .order-history-page h2 {
+    font-size: 22px;
+  }
+}

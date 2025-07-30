@@ -1,0 +1,39 @@
+.admin-create-post-form {
+  padding: 40px;
+  max-width: 700px;
+  margin: auto;
+  background: #ff6600;
+  border-radius: 50px;
+}
+.admin_post_heading {
+  color: #ddd;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+}
+.admin_post_create_form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.admin_post_create_form input,
+.admin_post_create_form textarea {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  outline: none;
+}
+.admin_post_create_form input:focus,
+.admin_post_create_form textarea:focus {
+  border-color: #05be0e;
+  box-shadow: 0 0 5px rgba(5, 190, 14, 0.5);
+}
+
+.admin_post_create_form button {
+  background: #05be0e;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 6px;
+  cursor: pointer;
+}

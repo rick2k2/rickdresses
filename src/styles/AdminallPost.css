@@ -1,0 +1,114 @@
+.admin-posts-table-container {
+  padding: 40px 20px;
+  max-width: 1000px;
+  margin: auto;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: orange;
+  border-radius: 12px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.08);
+}
+
+.admin-posts-table-container h2 {
+  font-size: 28px;
+  margin-bottom: 10px;
+  color: #333;
+  text-align: center;
+}
+
+.post-counter {
+  text-align: center;
+  font-size: 16px;
+  font-weight: 500;
+  color: #555;
+  margin-bottom: 20px;
+}
+
+.posts-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.posts-table th,
+.posts-table td {
+  padding: 12px 14px;
+  border: 1px solid #ddd;
+  text-align: left;
+  vertical-align: top;
+}
+
+.posts-table th {
+  background-color: #010101;
+  font-weight: bold;
+  color: #fff;
+}
+
+.posts-table tr:hover {
+  background-color: #fdf1e3;
+}
+
+.posts-table td button {
+  margin-right: 8px;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.edit-btn {
+  background-color: #0099cc;
+  color: white;
+}
+
+.edit-btn:hover {
+  background-color: #0077a8;
+}
+
+.delete-btn {
+  background-color: #cc0000;
+  color: white;
+}
+
+.delete-btn:hover {
+  background-color: #a30000;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .posts-table thead {
+    display: none;
+  }
+
+  .posts-table,
+  .posts-table tbody,
+  .posts-table tr,
+  .posts-table td {
+    display: block;
+    width: 100%;
+  }
+
+  .posts-table tr {
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 8px;
+  }
+
+  .posts-table td {
+    text-align: right;
+    padding-left: 50%;
+    position: relative;
+  }
+
+  .posts-table td::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 15px;
+    top: 10px;
+    font-weight: bold;
+    text-transform: capitalize;
+    color: #444;
+  }
+}

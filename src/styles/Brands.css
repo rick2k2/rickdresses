@@ -1,0 +1,28 @@
+/* Brands */
+.brands {
+  padding: 5rem;
+  text-align: center;
+  background-color: #fffdf5;
+}
+.brands h2 {
+  color: #f97316;
+  margin-bottom: 3rem;
+}
+.brand-logos {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 1rem;
+}
+
+.brand-logos img {
+  height: 50px;
+  object-fit: contain;
+  filter: grayscale(100%);
+  transition: filter 0.3s;
+}
+
+.brand-logos img:hover {
+  filter: none;
+}

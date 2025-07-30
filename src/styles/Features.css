@@ -1,0 +1,70 @@
+/* Features Section */
+.features-section {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background: linear-gradient(to right, #fffaf0, #fff5e0);
+  padding: 3rem 1rem;
+  gap: 2rem;
+  animation: fadeIn 1.2s ease-in-out;
+}
+.why_buy {
+  color: #f97316;
+}
+.feature {
+  max-width: 320px;
+  flex: 1 1 280px;
+  text-align: center;
+  border-radius: 18px;
+  padding: 2rem;
+  background: #ffffff;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-top: 4px solid #f97316;
+}
+
+.feature:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+  background-color: #fff7ed;
+}
+.features-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+}
+.feature h3 {
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+  color: #f97316;
+  transition: color 0.3s ease;
+}
+
+.feature p {
+  font-size: 1rem;
+  color: #333;
+  line-height: 1.6;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .features-section {
+    flex-direction: column;
+    align-items: center;
+  }
+}

@@ -1,0 +1,97 @@
+.admin-update-posts {
+  padding: 40px 20px;
+  max-width: 1000px;
+  margin: auto;
+  font-family: Arial, sans-serif;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.08);
+}
+
+.admin-update-posts h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.update-posts-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.update-posts-table th,
+.update-posts-table td {
+  padding: 12px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.update-posts-table th {
+  background-color: #f2f2f2;
+}
+
+.update-posts-table tr:hover {
+  background-color: #fdf1e3;
+}
+
+.update-posts-table button {
+  padding: 6px 10px;
+  border: none;
+  background-color: #0077cc;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.update-posts-table button:hover {
+  background-color: #005fa3;
+}
+
+.update-form {
+  margin-bottom: 30px;
+  background-color: #f8f8f8;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.update-form input,
+.update-form textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+}
+
+.form-buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+.form-buttons button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.form-buttons button[type="submit"] {
+  background-color: #28a745;
+  color: white;
+}
+
+.form-buttons button[type="submit"]:hover {
+  background-color: #218838;
+}
+
+.form-buttons button[type="button"] {
+  background-color: #dc3545;
+  color: white;
+}
+
+.form-buttons button[type="button"]:hover {
+  background-color: #c82333;
+}
