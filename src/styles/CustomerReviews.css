@@ -1,6 +1,6 @@
 .reviews-section {
   background: linear-gradient(250deg, #fff4e6, #ffe4cc);
-  padding: 3rem 1.5rem;
+  padding: 5rem 1.5rem;
   text-align: center;
   overflow: hidden;
 }
@@ -13,6 +13,10 @@
 }
 
 .review-card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
   background: linear-gradient(135deg, #fff4e6, #ffe0cc);
   color: #f97316;
   border-radius: 20px;

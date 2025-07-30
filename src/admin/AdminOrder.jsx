@@ -1,4 +1,3 @@
-// src/pages/AdminOrders.jsx
 import React, { useEffect, useState } from "react";
 import axios from "../utils/axiosConfig";
 import "../styles/AdminOrders.css";
@@ -6,6 +5,7 @@ import { toast } from "react-toastify";
 
 const AdminOrders = () => {
   const [orders, setOrders] = useState([]);
+  const [loading, setLoading] = useState(true); // 🔁 loading state
 
   const fetchOrders = async () => {
     try {
@@ -14,6 +14,8 @@ const AdminOrders = () => {
     } catch (err) {
       console.error("Failed to fetch orders:", err);
       toast.error("❌ Failed to fetch orders");
+    } finally {
+      setLoading(false); // ✅ stop loading
     }
   };
 
@@ -50,7 +52,12 @@ const AdminOrders = () => {
     <div className="admin-orders-container">
       <h2>📦 Admin Order Management</h2>
 
-      {orders.length === 0 ? (
+      {loading ? (
+        <div className="admin-loading">
+          <div className="admin-spinner"></div>
+          <p>Loading orders...</p>
+        </div>
+      ) : orders.length === 0 ? (
         <p>No orders yet.</p>
       ) : (
         <table className="admin-orders-table">

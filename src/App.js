@@ -37,6 +37,8 @@ import LoadingScreen from "./components/LoadingScreen";
 import IdlePopup from "./pages/IdlePopup";
 import OrderHistory from "./pages/OrderHistory.jsx";
 import PrivateRoute from "./components/PrivateRoute";
+import AdminBilling from "./admin/AdminBilling";
+
 function App() {
   const [user, setUser] = useState(null);
 
@@ -102,6 +104,15 @@ function App() {
                 </AdminRoute>
               }
             >
+              {/* Admin Billing */}
+              <Route
+                path="/admin/billing"
+                element={
+                  <AdminRoute>
+                    <AdminBilling />
+                  </AdminRoute>
+                }
+              />
               <Route index element={<AdminHome />} />
               <Route path="users" element={<AdminUsers />} />
               <Route path="users/update/:id" element={<UpdateUser />} />

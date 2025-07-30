@@ -6,25 +6,28 @@ import { useNavigate } from "react-router-dom";
 
 const AdminAllPost = () => {
   const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   const fetchPosts = async () => {
     try {
+      setLoading(true);
       const res = await axios.get("/posts");
       setPosts(res.data);
     } catch (err) {
       console.error("Failed to fetch posts:", err);
       toast.error("Failed to fetch posts");
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to delete this post?")) return;
-
     try {
       await axios.delete(`/posts/${id}`);
       toast.success("Post deleted");
-      fetchPosts(); // Refresh after delete
+      fetchPosts();
     } catch (err) {
       toast.error("Delete failed");
     }
@@ -43,7 +46,9 @@ const AdminAllPost = () => {
       <h2>📝 All Posts</h2>
       <p className="post-counter">Total Posts: {posts.length}</p>
 
-      {posts.length === 0 ? (
+      {loading ? (
+        <div className="spinner"></div>
+      ) : posts.length === 0 ? (
         <p>No posts available.</p>
       ) : (
         <table className="posts-table">

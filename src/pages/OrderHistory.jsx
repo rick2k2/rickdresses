@@ -37,7 +37,14 @@ const OrderHistory = () => {
     }
   };
 
-  if (loading) return <div className="order-loading">Loading...</div>;
+  if (loading)
+    return (
+      <div className="order-loading">
+        <div className="spinner"></div>
+        <p>Loading your orders...</p>
+      </div>
+    );
+
   if (error) return <div className="order-error">{error}</div>;
 
   return (

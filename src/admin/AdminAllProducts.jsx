@@ -6,6 +6,7 @@ import "../styles/AdminAllProducts.css";
 
 const AdminAllProducts = () => {
   const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true); // 🌀 loading state
 
   const fetchProducts = async () => {
     try {
@@ -13,6 +14,9 @@ const AdminAllProducts = () => {
       setProducts(res.data);
     } catch (error) {
       console.error("Error fetching products:", error);
+      toast.error("❌ Failed to fetch products");
+    } finally {
+      setLoading(false); // ✅ stop loading
     }
   };
 
@@ -37,7 +41,13 @@ const AdminAllProducts = () => {
   return (
     <div className="admin-products-table">
       <h2 className="admin_All_products">All Products</h2>
-      {products.length === 0 ? (
+
+      {loading ? (
+        <div className="admin-loading">
+          <div className="admin-spinner"></div>
+          <p>Loading products...</p>
+        </div>
+      ) : products.length === 0 ? (
         <p>No products found.</p>
       ) : (
         <table>

@@ -30,7 +30,10 @@ const AdminHome = () => {
       <h1>Dashboard</h1>
 
       {loading ? (
-        <div className="admin-loading">Loading stats...</div> // 💫 You can add spinner here
+        <div className="admin-loading">
+          <div className="admin-spinner"></div>
+          <p>Loading dashboard stats...</p>
+        </div> // 💫 You can add spinner here
       ) : (
         <div className="admin-stats">
           <div className="stat-card">
