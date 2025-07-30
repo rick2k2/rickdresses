@@ -1,9 +1,13 @@
 import axios from "axios";
 import { getToken } from "./auth";
 
+const API_URL =
+  process.env.NODE_ENV === "production"
+    ? "https://rd-backend-jb01.onrender.com/api"
+    : "http://localhost:5000/api";
+
 const instance = axios.create({
-  // baseURL: "http://localhost:5000/api", local host server
-  baseURL: "https://rd-backend-jb01.onrender.com/api", //render server
+  baseURL: API_URL,
 });
 
 instance.interceptors.request.use(
