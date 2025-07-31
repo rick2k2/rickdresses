@@ -56,17 +56,19 @@
   background-color: #e55b00;
 }
 
-.hero-content2 {
+.hero_banner_content {
   flex: 1;
   min-width: 250px;
   text-align: center;
   animation: float 3s ease-in-out infinite;
 }
 
-.hero-content2 img {
-  width: 280px;
+.hero_banner_content img {
+  width: 400px;
   max-width: 90%;
   height: auto;
+  box-shadow: none;
+  background: transparent;
 }
 
 /* Girl floating animation */

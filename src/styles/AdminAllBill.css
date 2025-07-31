@@ -1,0 +1,138 @@
+.admin-all-bill {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  background: #fffaf5;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.07);
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+}
+.admin-all-bill h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #ff5c00;
+  font-size: 2rem;
+  position: relative;
+}
+
+.admin-all-bill h2::after {
+  content: "";
+  display: block;
+  height: 4px;
+  width: 80px;
+  background-color: #ff5c00;
+  margin: 10px auto 0;
+  border-radius: 2px;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(255, 92, 0, 0.1);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+th,
+td {
+  padding: 14px 18px;
+  border-bottom: 1px solid #f2f2f2;
+  text-align: left;
+  vertical-align: top;
+}
+
+th {
+  background-color: #fff2e5;
+  color: #333;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+}
+
+td ul {
+  padding-left: 16px;
+  margin: 0;
+}
+
+td ul li {
+  list-style-type: disc;
+  margin-bottom: 5px;
+  font-size: 0.95rem;
+  color: #444;
+}
+
+.spinner_container_admin_all_bill {
+  text-align: center;
+  padding: 40px;
+}
+
+.spinner_Admin_allbill {
+  border: 6px solid #f3f3f3;
+  border-top: 6px solid #ff5c00;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  margin: auto;
+  animation: spin 1s linear infinite;
+}
+
+.spinner_container_admin_all_bill p {
+  margin-top: 12px;
+  font-size: 1.1rem;
+  color: #444;
+}
+.action_buttons_container_all_bills {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 20px;
+}
+.edit_btn_all_bill {
+  background: rgb(33, 173, 255);
+  width: 100%;
+  font-weight: bold;
+}
+.delete_btn_all_bill {
+  background: rgb(246, 7, 55);
+  width: 100%;
+  font-weight: bold;
+}
+.download_btn_all_bill {
+  background: rgb(17, 242, 13);
+  width: 100%;
+  font-weight: bold;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Responsive table */
+@media (max-width: 768px) {
+  th,
+  td {
+    padding: 10px;
+    font-size: 0.85rem;
+  }
+
+  .admin-all-bill h2 {
+    font-size: 1.5rem;
+  }
+
+  .delete-btn {
+    padding: 6px 10px;
+    font-size: 0.8rem;
+  }
+}

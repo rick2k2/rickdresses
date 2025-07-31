@@ -1,4 +1,3 @@
-// /pages/AdminBilling.jsx
 import React, { useState } from "react";
 import axios from "../utils/axiosConfig";
 import "../styles/AdminBilling.css";
@@ -7,9 +6,11 @@ import { toast } from "react-toastify";
 const AdminBilling = () => {
   const [customerName, setCustomerName] = useState("");
   const [phone, setPhone] = useState("");
+  const [address, setAddress] = useState("");
   const [items, setItems] = useState([
     { productName: "", quantity: 1, price: 0 },
   ]);
+  const [paidAmount, setPaidAmount] = useState(0);
 
   const handleItemChange = (index, field, value) => {
     const newItems = [...items];
@@ -31,6 +32,7 @@ const AdminBilling = () => {
     (acc, item) => acc + item.quantity * item.price,
     0
   );
+  const dueAmount = totalAmount - paidAmount;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -38,12 +40,17 @@ const AdminBilling = () => {
       await axios.post("/bills/create", {
         customerName,
         phone,
+        address,
         items,
         totalAmount,
+        paidAmount,
+        dueAmount,
       });
       toast.success("✅ Bill Generated!");
       setCustomerName("");
       setPhone("");
+      setAddress("");
+      setPaidAmount(0);
       setItems([{ productName: "", quantity: 1, price: 0 }]);
     } catch (err) {
       toast.error("❌ Failed to generate bill.");
@@ -66,6 +73,13 @@ const AdminBilling = () => {
           placeholder="Phone (optional)"
           value={phone}
           onChange={(e) => setPhone(e.target.value)}
+        />
+        <input
+          type="text"
+          placeholder="Address"
+          value={address}
+          onChange={(e) => setAddress(e.target.value)}
+          required
         />
 
         <div className="billing-items">
@@ -110,11 +124,30 @@ const AdminBilling = () => {
             </div>
           ))}
         </div>
+
         <button type="button" onClick={handleAddItem}>
           ➕ Add Item
         </button>
 
         <h3>Total: ₹{totalAmount}</h3>
+
+        <label htmlFor="paid-amount">Paid Amount</label>
+        <input
+          type="number"
+          id="paid-amount"
+          placeholder="Enter amount paid"
+          value={paidAmount === 0 ? "" : paidAmount}
+          onFocus={(e) => {
+            if (paidAmount === 0) setPaidAmount("");
+          }}
+          onChange={(e) =>
+            setPaidAmount(e.target.value === "" ? 0 : Number(e.target.value))
+          }
+          required
+        />
+
+        <h4>Due Amount: ₹{dueAmount}</h4>
+
         <button type="submit" className="generate-btn">
           Generate Bill
         </button>

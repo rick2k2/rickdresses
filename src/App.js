@@ -37,7 +37,10 @@ import LoadingScreen from "./components/LoadingScreen";
 import IdlePopup from "./pages/IdlePopup";
 import OrderHistory from "./pages/OrderHistory.jsx";
 import PrivateRoute from "./components/PrivateRoute";
+import AdminBillMenu from "./admin/AdminBillMenu";
 import AdminBilling from "./admin/AdminBilling";
+import AdminAllBill from "./admin/AdminAllBill";
+import AdminDueBill from "./admin/AdminDueBill.jsx";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -104,15 +107,42 @@ function App() {
                 </AdminRoute>
               }
             >
+              {/* Admin Bill Menu */}
+              <Route
+                path="/admin/bills"
+                element={
+                  <AdminRoute>
+                    <AdminBillMenu />
+                  </AdminRoute>
+                }
+              />
               {/* Admin Billing */}
               <Route
-                path="/admin/billing"
+                path="/admin/bills/create"
                 element={
                   <AdminRoute>
                     <AdminBilling />
                   </AdminRoute>
                 }
               />
+              <Route
+                path="/admin/allbills"
+                element={
+                  <AdminRoute>
+                    <AdminAllBill />
+                  </AdminRoute>
+                }
+              />
+              {/* Due bill */}
+              <Route
+                path="/admin/bills/due"
+                element={
+                  <AdminRoute>
+                    <AdminDueBill />
+                  </AdminRoute>
+                }
+              />
+
               <Route index element={<AdminHome />} />
               <Route path="users" element={<AdminUsers />} />
               <Route path="users/update/:id" element={<UpdateUser />} />

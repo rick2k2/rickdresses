@@ -23,7 +23,7 @@ const AdminSidebar = () => {
           <Link to="/admin/post">New Post</Link>
         </li>
         <li>
-          <Link to="/admin/billing">Create Bill</Link>
+          <Link to="/admin/bills">Create Bill</Link>
         </li>
       </ul>
     </div>

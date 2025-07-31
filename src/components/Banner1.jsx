@@ -15,8 +15,9 @@ const Banner1 = () => {
           <button className="cta-button">Shop Now</button>
         </Link>
       </div>
-      <div className="hero-content2">
-        <img src="/assests/g1.png" alt="Banner" />
+      <div className="hero_banner_content">
+        {/* <img src="/assests/g1.png" alt="Banner" /> */}
+        <img src="/assests/gb1.png" alt="Banner" />
       </div>
     </div>
   );
