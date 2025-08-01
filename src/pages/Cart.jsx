@@ -4,7 +4,7 @@ import { useCart } from "../context/CartContext";
 import "../styles/cart.css";
 
 const Cart = () => {
-  const { cartItems, updateQuantity, removeFromCart } = useCart();
+  const { cartItems, updateQuantity, removeFromCart, clearCart } = useCart();
 
   const totalPrice = cartItems.reduce(
     (acc, item) => acc + item.price * item.quantity,
@@ -37,7 +37,10 @@ const Cart = () => {
                     onChange={(e) => updateQuantity(item.id, e.target.value)}
                     className="quantity-select"
                   >
-                    {[1, 2, 3, 4, 5].map((q) => (
+                    {Array.from(
+                      { length: Math.max(item.quantity, 10) },
+                      (_, i) => i + 1
+                    ).map((q) => (
                       <option key={q} value={q}>
                         {q}
                       </option>
@@ -46,7 +49,7 @@ const Cart = () => {
                 </label>
               </div>
               <button
-                className="remove-btn"
+                className="cart_remove_btn"
                 onClick={() => removeFromCart(item.id)}
               >
                 Remove
@@ -56,12 +59,23 @@ const Cart = () => {
 
           <div className="cart-summary">
             <h3>Total: ₹{totalPrice}</h3>
-            <Link to="/shop">
+            <Link to="/shop" className="cart_btn_link">
               <button className="buymore-btn">Buy More</button>
             </Link>
-            <Link to="/checkout">
+            <Link to="/checkout" className="cart_btn_link">
               <button className="checkout-btn">Proceed to Checkout</button>
             </Link>
+            <button
+              className="clear_cart_btn"
+              onClick={() => {
+                const confirmClear = window.confirm(
+                  "Are you sure you want to remove all items?"
+                );
+                if (confirmClear) clearCart();
+              }}
+            >
+              Clear All Items
+            </button>
           </div>
         </div>
       )}

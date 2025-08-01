@@ -14,8 +14,8 @@ const OrderSuccess = () => {
   const { items, total, form } = orderDetails;
 
   return (
-    <div className="order-success">
-      <div className="order-card">
+    <div className="order_success_container">
+      <div className="order_card">
         <h2>🎉 Order Confirmed!</h2>
         <p>
           <strong>Name:</strong> {form.name}
@@ -35,10 +35,10 @@ const OrderSuccess = () => {
         <h3>Total Paid: ₹{total}</h3>
 
         <button
-          className="continue_shopping_btn"
-          onClick={() => navigate("/shop")}
+          className="view_order_history_btn"
+          onClick={() => navigate("/order-history")}
         >
-          Continue Shopping 🛒
+          View Order History
         </button>
       </div>
     </div>

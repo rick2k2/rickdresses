@@ -42,7 +42,7 @@ const AdminUsers = () => {
 
   return (
     <div className="admin-users">
-      <h2>👤 All Users</h2>
+      <h2>👤 ALL USERS</h2>
 
       {loading ? (
         <div className="spinner-container">
@@ -53,6 +53,8 @@ const AdminUsers = () => {
         <table className="user-table">
           <thead>
             <tr>
+              <th>SL</th>
+              <th>Avatar</th>
               <th>Name</th>
               <th>Email</th>
               <th>Registered</th>
@@ -62,31 +64,45 @@ const AdminUsers = () => {
           </thead>
           <tbody>
             {users.length > 0 ? (
-              users.map((u) => (
+              users.map((u, index) => (
                 <tr key={u._id}>
+                  <td>{index + 1}</td>
+                  <td>
+                    {u.profileImage ? (
+                      <img
+                        src={u.profileImage}
+                        alt={u.name}
+                        className="admin-user-avatar"
+                      />
+                    ) : (
+                      <div className="admin-user-avatar-fallback">
+                        {u.name?.[0]?.toUpperCase() || "U"}
+                      </div>
+                    )}
+                  </td>
                   <td>{u.name}</td>
                   <td>{u.email}</td>
                   <td>{new Date(u.createdAt).toLocaleDateString()}</td>
                   <td>{u.isAdmin ? "Admin" : "User"}</td>
-                  <td>
+                  <td className="admin_user_btn_container">
                     <button
                       onClick={() => deleteUser(u._id)}
-                      className="delete-btn"
+                      className="admin_user_delete_btn admin_user_action_btn"
                     >
                       ❌ Delete
                     </button>
                     <button
                       onClick={() => handleModify(u._id)}
-                      className="modify-btn"
+                      className="admin_user_modify_btn admin_user_action_btn"
                     >
-                      🛠️ Modify
+                      🛠️ Update
                     </button>
                   </td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan="5">No users found.</td>
+                <td colSpan="7">No users found.</td>
               </tr>
             )}
           </tbody>

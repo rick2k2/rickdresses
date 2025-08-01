@@ -11,7 +11,7 @@
 .admin-users h2 {
   text-align: center;
   margin-bottom: 25px;
-  color: #333;
+  color: #ff6600;
   font-size: 28px;
 }
 
@@ -59,30 +59,54 @@
   color: #444;
 }
 
+.admin_user_btn_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+}
 /* Buttons */
-.delete-btn,
-.modify-btn {
-  font-weight: bold;
-  transition: background-color 0.3s ease, color 0.3s ease;
+.admin_user_action_btn {
+  padding: 10px 12px;
 }
 
-.delete-btn {
+.admin_user_delete_btn {
   background-color: #ff4d4d;
   color: white;
-  font-weight: bold !important;
 }
 
-.delete-btn:hover {
+.admin_user_delete_btn:hover {
   background-color: #d93636;
 }
 
-.modify-btn {
+.admin_user_modify_btn {
   background-color: #4caf50;
   color: white;
 }
 
-.modify-btn:hover {
+.admin_user_modify_btn:hover {
   background-color: #3e8e41;
+}
+.admin-user-avatar {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid #ccc;
+}
+
+.admin-user-avatar-fallback {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  background-color: #f4a615;
+  color: #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 14px;
+  border: 1px solid #ccc;
 }
 
 /* Responsive */

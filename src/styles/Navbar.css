@@ -138,6 +138,40 @@
   top: 60px; /* appear below navbar */
 }
 
+.profile-image-link {
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+}
+
+.profile-image {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid white;
+}
+
+.initials {
+  background-color: transparent;
+  border: 3px solid #fff;
+  color: #fff !important;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold !important;
+  font-size: 1.2rem !important;
+}
+
+.mobile-profile-icon {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
 /* Hide things in mobile */
 @media (max-width: 768px) {
   .nav-links,

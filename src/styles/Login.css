@@ -68,3 +68,17 @@
   transform: scale(1.03);
   box-shadow: 0 6px 12px rgba(255, 102, 0, 0.4);
 }
+.forgot-link {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.forgot-link a {
+  color: #007bff;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.forgot-link a:hover {
+  text-decoration: underline;
+}

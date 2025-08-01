@@ -3,7 +3,7 @@ import { getToken } from "./auth";
 
 // Base URL from env
 const API_URL = process.env.REACT_APP_API_BASE_URL;
-
+console.log("✅ Axios baseURL is:", API_URL);
 const instance = axios.create({
   baseURL: API_URL,
 });

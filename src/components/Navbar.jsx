@@ -27,6 +27,34 @@ const Navbar = ({ user, setUser }) => {
   const toggleMenu = () => setMenuOpen((prev) => !prev);
   const closeMenu = () => setMenuOpen(false);
 
+  const renderProfileIcon = () => {
+    if (!user) return null;
+
+    // Display profile image if exists, otherwise initials
+    if (user.profileImage) {
+      return (
+        <Link to="/profile" onClick={closeMenu} className="profile-image-link">
+          <img
+            src={user.profileImage}
+            alt="Profile_Image"
+            className="profile-image"
+          />
+        </Link>
+      );
+    } else {
+      const initials = user.name?.slice(0, 1).toUpperCase() || "U";
+      return (
+        <Link
+          to="/profile"
+          onClick={closeMenu}
+          className="profile-image-link initials"
+        >
+          {initials}
+        </Link>
+      );
+    }
+  };
+
   const menuLinks = (
     <>
       <li>
@@ -42,11 +70,6 @@ const Navbar = ({ user, setUser }) => {
       <li>
         <Link to="/cart" onClick={closeMenu}>
           Cart
-        </Link>
-      </li>
-      <li>
-        <Link to="/order-history" onClick={closeMenu}>
-          Order
         </Link>
       </li>
 
@@ -66,8 +89,8 @@ const Navbar = ({ user, setUser }) => {
       ) : (
         <>
           <li>
-            <Link to="/profile" onClick={closeMenu}>
-              Profile
+            <Link to="/order-history" onClick={closeMenu}>
+              Order
             </Link>
           </li>
           <li className="logout-btn-container">
@@ -99,7 +122,10 @@ const Navbar = ({ user, setUser }) => {
             </div>
           </div>
         ) : (
-          <ul className="nav-links">{menuLinks}</ul>
+          <ul className="nav-links">
+            {menuLinks}
+            {user && <li>{renderProfileIcon()}</li>}
+          </ul>
         )}
       </nav>
 
@@ -111,6 +137,9 @@ const Navbar = ({ user, setUser }) => {
       {isMobile && (
         <ul className={`dropdown-menu ${menuOpen ? "open" : ""}`}>
           {menuLinks}
+          {user && (
+            <li className="mobile-profile-icon">{renderProfileIcon()}</li>
+          )}
         </ul>
       )}
     </>

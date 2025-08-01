@@ -1,18 +1,24 @@
 import React, { useEffect, useState } from "react";
 import axios from "../utils/axiosConfig";
 import "../styles/OrderHistory.css";
+import { toast } from "react-toastify"; // ✅ optional toast
 
 const OrderHistory = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [refresh, setRefresh] = useState(false);
+  const [cancelingOrderId, setCancelingOrderId] = useState(null);
 
   useEffect(() => {
     const fetchOrders = async () => {
       try {
         const { data } = await axios.get("/orders/my");
-        setOrders(data);
+        // ✅ Optional: Sort orders by date (latest first)
+        const sorted = [...data].sort(
+          (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+        );
+        setOrders(sorted);
       } catch (err) {
         setError("Failed to load order history");
       } finally {
@@ -30,10 +36,14 @@ const OrderHistory = () => {
     if (!confirmCancel) return;
 
     try {
-      await axios.delete(`/api/orders/delete/${id}`);
+      setCancelingOrderId(id); // disable button
+      await axios.delete(`/orders/delete/${id}`); // ✅ fixed path
+      toast.success("Order cancelled successfully!");
       setRefresh((prev) => !prev);
     } catch (err) {
-      alert("Failed to cancel order.");
+      toast.error("Failed to cancel order.");
+    } finally {
+      setCancelingOrderId(null);
     }
   };
 
@@ -89,8 +99,11 @@ const OrderHistory = () => {
                     <button
                       className="cancel-btn"
                       onClick={() => handleCancel(order._id)}
+                      disabled={cancelingOrderId === order._id}
                     >
-                      Cancel
+                      {cancelingOrderId === order._id
+                        ? "Cancelling..."
+                        : "Cancel"}
                     </button>
                   ) : (
                     <span className="no-action">—</span>

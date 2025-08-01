@@ -1,6 +1,6 @@
 .register-container {
   max-width: 500px;
-  height: 380px;
+  height: 450px;
   margin: 60px auto;
   padding: 35px 45px;
   background: linear-gradient(135deg, #fff8f2, #ffece0);
@@ -67,4 +67,19 @@
 .register button:hover {
   transform: scale(1.03);
   box-shadow: 0 6px 12px rgba(255, 102, 0, 0.4);
+}
+.login-link-register-page {
+  text-align: center;
+  margin-top: 15px;
+  font-size: 14px;
+  margin-top: 30px;
+}
+
+.login-link-register-page a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.login-link-register-page a:hover {
+  text-decoration: underline;
 }

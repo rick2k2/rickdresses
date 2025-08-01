@@ -24,13 +24,19 @@ const Checkout = () => {
 
   const [loading, setLoading] = useState(false);
   const [showBill, setShowBill] = useState(false);
+  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!userInfo) {
+      alert("You must be logged in to place an order.");
+      navigate("/login");
+      return;
+    }
 
     if (cartItems.length === 0) {
       alert("Your cart is empty!");
@@ -47,19 +53,12 @@ const Checkout = () => {
       setLoading(true);
       setShowBill(true);
 
-      // ✅ Save order to backend first
       const res = await axios.post("/orders", orderDetails);
 
       if (res.status === 201 || res.data.success) {
-        // ✅ Wait a bit and print
         setTimeout(() => {
           printBill();
-
-          // ✅ Navigate to order success with data
-          navigate("/order-success", {
-            state: { orderDetails },
-          });
-
+          navigate("/order-success", { state: { orderDetails } });
           clearCart();
         }, 800);
       } else {

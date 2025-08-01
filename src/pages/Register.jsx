@@ -3,6 +3,7 @@ import axios from "axios";
 import "../styles/Register.css";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Link } from "react-router-dom"; // ⬅️ Import Link
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -20,12 +21,10 @@ const Register = () => {
     try {
       const res = await axios.post(
         `${process.env.REACT_APP_API_BASE_URL}/users/register`,
-        // "http://localhost:5000/api/users/register",
         formData
       );
       toast.success("Registration successful!");
       console.log(res.data);
-      // ✅ Clear form
       setFormData({ name: "", email: "", password: "" });
     } catch (error) {
       console.error(error.response?.data || error.message);
@@ -63,6 +62,11 @@ const Register = () => {
         />
         <button type="submit">Register</button>
       </form>
+
+      <div className="login-link-register-page">
+        Already registered? <Link to="/login">Login</Link>{" "}
+        {/* ✅ Link to Login */}
+      </div>
     </div>
   );
 };

@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import axios from "axios";
-import "../styles/CreateProduct.css";
 import { toast } from "react-toastify";
+import "../styles/AdminUpdateProducts.css";
 
-const CreateProduct = () => {
+const AdminUpdateProduct = () => {
+  const { id } = useParams();
   const [product, setProduct] = useState({
     name: "",
     price: "",
@@ -12,8 +14,21 @@ const CreateProduct = () => {
     countInStock: "",
     description: "",
   });
-
   const [imageFile, setImageFile] = useState(null);
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      try {
+        const res = await axios.get(
+          `${process.env.REACT_APP_API_BASE_URL}/products/${id}`
+        );
+        setProduct(res.data);
+      } catch (err) {
+        toast.error("Failed to fetch product data.");
+      }
+    };
+    fetchProduct();
+  }, [id]);
 
   const handleChange = (e) => {
     setProduct({ ...product, [e.target.name]: e.target.value });
@@ -26,58 +41,39 @@ const CreateProduct = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!imageFile) {
-      toast.error("Please select an image file.");
-      return;
-    }
-
     try {
       const formData = new FormData();
-
-      // Append fields
       Object.entries(product).forEach(([key, value]) => {
         formData.append(key, value);
       });
+      if (imageFile) {
+        formData.append("image", imageFile);
+      }
 
-      // Append image file
-      formData.append("image", imageFile);
-
-      await axios.post(
-        `${process.env.REACT_APP_API_BASE_URL}/products`,
+      await axios.put(
+        `${process.env.REACT_APP_API_BASE_URL}/products/${id}`,
         formData,
         {
           headers: {
             "Content-Type": "multipart/form-data",
           },
+          withCredentials: true, // if you're using cookies for auth
         }
       );
 
-      toast.success("🎉 Product created successfully!");
-
-      // Reset form
-      setProduct({
-        name: "",
-        price: "",
-        brand: "",
-        category: "",
-        countInStock: "",
-        description: "",
-      });
-      setImageFile(null);
+      toast.success("✅ Product updated successfully!");
     } catch (err) {
-      toast.error("❌ Failed to create product.");
       console.error(err);
+      toast.error("❌ Failed to update product.");
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="create-form">
-      <h2>Create New Product</h2>
-
+    <form onSubmit={handleSubmit} className="update-form">
+      <h2>Update Product</h2>
       <input
         name="name"
         value={product.name}
-        placeholder="Product Name"
         onChange={handleChange}
         required
       />
@@ -85,27 +81,19 @@ const CreateProduct = () => {
         name="price"
         type="number"
         value={product.price}
-        placeholder="Price"
         onChange={handleChange}
         required
       />
-      <input
-        type="file"
-        accept="image/*"
-        onChange={handleImageChange}
-        required
-      />
+      <input type="file" accept="image/*" onChange={handleImageChange} />
       <input
         name="brand"
         value={product.brand}
-        placeholder="Brand"
         onChange={handleChange}
         required
       />
       <input
         name="category"
         value={product.category}
-        placeholder="Category"
         onChange={handleChange}
         required
       />
@@ -113,20 +101,17 @@ const CreateProduct = () => {
         name="countInStock"
         type="number"
         value={product.countInStock}
-        placeholder="Stock Count"
         onChange={handleChange}
         required
       />
       <textarea
         name="description"
         value={product.description}
-        placeholder="Description"
         onChange={handleChange}
       ></textarea>
-
-      <button type="submit">Create</button>
+      <button type="submit">Update</button>
     </form>
   );
 };
 
-export default CreateProduct;
+export default AdminUpdateProduct;

@@ -5,16 +5,17 @@ import "../styles/shop.css";
 
 const Shop = () => {
   const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true); // 👈 added loading state
+  const [loading, setLoading] = useState(true);
 
   const fetchProducts = async () => {
     try {
       const res = await axios.get("/products");
+      console.log(`${process.env.REACT_APP_API_BASE_URL}`);
       setProducts(res.data);
     } catch (error) {
       console.error("Error fetching products:", error);
     } finally {
-      setLoading(false); // 👈 stop loading after fetch attempt
+      setLoading(false);
     }
   };
 

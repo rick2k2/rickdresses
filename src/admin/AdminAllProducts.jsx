@@ -6,7 +6,7 @@ import "../styles/AdminAllProducts.css";
 
 const AdminAllProducts = () => {
   const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true); // 🌀 loading state
+  const [loading, setLoading] = useState(true);
 
   const fetchProducts = async () => {
     try {
@@ -16,7 +16,7 @@ const AdminAllProducts = () => {
       console.error("Error fetching products:", error);
       toast.error("❌ Failed to fetch products");
     } finally {
-      setLoading(false); // ✅ stop loading
+      setLoading(false);
     }
   };
 
@@ -70,7 +70,11 @@ const AdminAllProducts = () => {
                   <img
                     src={product.image}
                     alt={product.name}
-                    style={{ width: "150px", height: "auto" }}
+                    className="admin-product-img"
+                    onError={(e) =>
+                      (e.target.src =
+                        "https://via.placeholder.com/150?text=No+Image")
+                    }
                   />
                 </td>
                 <td>{product.name}</td>

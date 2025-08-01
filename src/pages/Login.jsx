@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import "../styles/Login.css";
 import { setToken } from "../utils/auth";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom"; // ⬅️ Added Link
 import { toast } from "react-toastify";
 
 const Login = ({ setUser }) => {
@@ -52,6 +52,9 @@ const Login = ({ setUser }) => {
           required
         />
         <button type="submit">Login</button>
+        <div className="forgot-link">
+          <Link to="/forgot-password">Forgot Password?</Link>
+        </div>
       </form>
     </div>
   );

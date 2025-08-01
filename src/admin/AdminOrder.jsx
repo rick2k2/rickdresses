@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 
 const AdminOrders = () => {
   const [orders, setOrders] = useState([]);
-  const [loading, setLoading] = useState(true); // 🔁 loading state
+  const [loading, setLoading] = useState(true);
 
   const fetchOrders = async () => {
     try {
@@ -15,21 +15,24 @@ const AdminOrders = () => {
       console.error("Failed to fetch orders:", err);
       toast.error("❌ Failed to fetch orders");
     } finally {
-      setLoading(false); // ✅ stop loading
+      setLoading(false);
     }
   };
 
-  const handleDelete = async (orderId) => {
-    const confirmDelete = window.confirm("🗑️ Delete this order?");
-    if (!confirmDelete) return;
+  const handleCancelByAdmin = async (orderId) => {
+    const reason = prompt("Enter reason for cancellation:");
+    if (!reason) return;
 
     try {
-      await axios.delete(`/orders/delete/${orderId}`);
-      toast.success("✅ Order deleted");
+      await axios.put(`/orders/cancel/${orderId}`, {
+        cancelledBy: "admin",
+        cancelReason: reason,
+      });
+      toast.success("🛑 Order cancelled by admin");
       fetchOrders();
     } catch (err) {
-      console.error("Delete failed:", err);
-      toast.error("❌ Failed to delete order");
+      console.error("Cancel failed:", err);
+      toast.error("❌ Failed to cancel order");
     }
   };
 
@@ -41,6 +44,22 @@ const AdminOrders = () => {
     } catch (err) {
       console.error("Deliver failed:", err);
       toast.error("❌ Failed to mark as delivered");
+    }
+  };
+
+  const handleDeleteOrder = async (orderId) => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to permanently delete this order?"
+    );
+    if (!confirmDelete) return;
+
+    try {
+      await axios.delete(`/orders/delete/${orderId}`);
+      toast.success("🗑️ Order permanently deleted");
+      fetchOrders();
+    } catch (err) {
+      console.error("Delete failed:", err);
+      toast.error("❌ Failed to delete order");
     }
   };
 
@@ -77,7 +96,7 @@ const AdminOrders = () => {
           <tbody>
             {orders.map((order) => (
               <tr key={order._id}>
-                <td>{order._id.slice(-6)}</td>
+                <td className="admin_order_id">{order._id.slice(-6)}</td>
                 <td>{order.name}</td>
                 <td>{order.phone}</td>
                 <td>{order.address}</td>
@@ -93,19 +112,32 @@ const AdminOrders = () => {
                 <td>₹{order.total}</td>
                 <td>{new Date(order.createdAt).toLocaleString()}</td>
                 <td>
-                  {order.status === "Delivered" ? "✅ Delivered" : "⏳ Pending"}
+                  {order.status === "Delivered" ? (
+                    "✅ Delivered"
+                  ) : order.status === "Cancelled" ? (
+                    <span className="cancelled">❌ Cancelled</span>
+                  ) : (
+                    "⏳ Pending"
+                  )}
                 </td>
-                <td>
+                <td className="admin_order_btn_container">
                   <button
                     className="deliver-btn"
                     onClick={() => markAsDelivered(order._id)}
-                    disabled={order.status === "Delivered"}
+                    disabled={order.status !== "Pending"}
                   >
                     ✅ Deliver
                   </button>
                   <button
+                    className="cancel-btn"
+                    onClick={() => handleCancelByAdmin(order._id)}
+                    disabled={order.status !== "Pending"}
+                  >
+                    🛑 Cancel
+                  </button>
+                  <button
                     className="delete-btn"
-                    onClick={() => handleDelete(order._id)}
+                    onClick={() => handleDeleteOrder(order._id)}
                   >
                     🗑️ Delete
                   </button>
