@@ -1,14 +1,13 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";
-import axios from "../utils/axiosConfig"; // ✅ Your custom axios instance
+import axios from "../utils/axiosConfig";
 import "../styles/Checkout.css";
 
 const Checkout = () => {
   const navigate = useNavigate();
-  const billRef = useRef();
-
   const { cartItems, clearCart } = useCart();
+  const [paymentMethod, setPaymentMethod] = useState("Cash on Delivery");
 
   const [form, setForm] = useState({
     name: "",
@@ -23,12 +22,12 @@ const Checkout = () => {
   );
 
   const [loading, setLoading] = useState(false);
-  const [showBill, setShowBill] = useState(false);
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -47,20 +46,19 @@ const Checkout = () => {
       form,
       items: cartItems,
       total,
+      payment: {
+        method: paymentMethod,
+        status: "Pending",
+      },
     };
 
     try {
       setLoading(true);
-      setShowBill(true);
-
       const res = await axios.post("/orders", orderDetails);
 
       if (res.status === 201 || res.data.success) {
-        setTimeout(() => {
-          printBill();
-          navigate("/order-success", { state: { orderDetails } });
-          clearCart();
-        }, 800);
+        clearCart();
+        navigate("/order-success", { state: { orderDetails } });
       } else {
         alert("Failed to save order. Try again.");
       }
@@ -70,10 +68,6 @@ const Checkout = () => {
     } finally {
       setLoading(false);
     }
-  };
-
-  const printBill = () => {
-    window.print();
   };
 
   return (
@@ -115,6 +109,17 @@ const Checkout = () => {
             onChange={handleChange}
             required
           />
+          <select
+            name="paymentMethod"
+            value={paymentMethod}
+            onChange={(e) => setPaymentMethod(e.target.value)}
+            required
+          >
+            <option value="Cash on Delivery">Cash on Delivery</option>
+            <option value="Online">Online</option>
+            <option value="Card">Card</option>
+            <option value="UPI">UPI</option>
+          </select>
           <button type="submit" disabled={loading}>
             {loading ? "Placing Order..." : "🛒 Place Order"}
           </button>
@@ -137,36 +142,6 @@ const Checkout = () => {
           </div>
         </div>
       </div>
-
-      {showBill && (
-        <div className="print-bill" ref={billRef}>
-          <h3>🎉 Order Placed! Final Bill:</h3>
-          <div className="bill-box">
-            <p>
-              <strong>Name:</strong> {form.name}
-            </p>
-            <p>
-              <strong>Email:</strong> {form.email}
-            </p>
-            <p>
-              <strong>Address:</strong> {form.address}
-            </p>
-            <p>
-              <strong>Phone:</strong> {form.phone}
-            </p>
-            <hr />
-            <h4>Items:</h4>
-            {cartItems.map((item, idx) => (
-              <p key={idx}>
-                {item.name} × {item.quantity} = ₹{item.quantity * item.price}
-              </p>
-            ))}
-            <hr />
-            <h3>Total Paid: ₹{total}</h3>
-            <button onClick={printBill}>🖨️ Print Bill</button>
-          </div>
-        </div>
-      )}
     </div>
   );
 };

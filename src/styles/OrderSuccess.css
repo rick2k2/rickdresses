@@ -49,6 +49,20 @@
 .view_order_history_btn:hover {
   transform: scale(1.05);
 }
+.order_history_payment_btn {
+  background: #790494;
+  color: white;
+  padding: 10px 15px;
+  font-size: 1rem;
+  cursor: pointer;
+  border: none;
+  border-radius: 50px;
+  box-shadow: 5px 12px 30px rgba(48, 47, 47, 0.2);
+  transition: 0.3s ease-in-out;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  margin-top: 40px;
+  margin-left: 20px;
+}
 
 @keyframes pop {
   from {

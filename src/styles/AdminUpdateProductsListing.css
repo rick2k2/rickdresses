@@ -75,6 +75,10 @@ h2 {
 .cancel-btn {
   margin-left: 2rem;
 }
+.update_btn_admin_product_Listing {
+  background: #ff6600;
+  margin-top: 10px;
+}
 @media (max-width: 768px) {
   .uproduct-list {
     flex-direction: column;

@@ -1,7 +1,7 @@
 /* Navbar container */
 .navbar {
   background-color: #f97316;
-  padding: 1rem 1.2rem;
+  padding: 2rem 1.4rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -75,22 +75,21 @@
   margin-top: -5px;
   margin-left: -10px;
 }
-.logout-btn {
-  background-color: transparent;
+.logout_btn_navbar {
+  background-color: transparent !important;
   border: none;
   color: white;
   cursor: pointer;
   padding: 0.5rem 1rem;
-  font-size: 1rem;
-  text-align: left;
-  transition: all 0.3s ease;
+  font-size: 1.1rem;
   font-weight: 500;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  margin-top: -5px;
 }
-
-.logout-btn:hover {
-  color: #ffcccb;
+.logout_btn_navbar:hover {
+  color: #000 !important;
+  transform: none;
 }
-
 /* Overlay */
 .overlay {
   position: fixed;
@@ -142,6 +141,7 @@
   display: flex;
   align-items: center;
   margin-left: 10px;
+  margin-top: -10px;
 }
 
 .profile-image {
@@ -156,20 +156,52 @@
   background-color: transparent;
   border: 3px solid #fff;
   color: #fff !important;
-  width: 30px;
-  height: 30px;
+  width: 35px;
+  height: 35px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: bold !important;
   font-size: 1.2rem !important;
+  border: 2px solid white;
 }
 
 .mobile-profile-icon {
   display: flex;
   justify-content: center;
   margin-top: 10px;
+}
+.lg_btn {
+  background: none !important;
+  margin-top: -4px;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  font-size: 1.1rem;
+}
+.lg_btn:hover {
+  transition: none !important;
+  color: #000;
+}
+
+.cart_badge {
+  background: red;
+  color: white;
+  border-radius: 50%;
+  padding: 4px;
+  font-size: 0.7rem;
+  margin-left: 3px;
+  animation: pop 0.3s ease-in-out;
+  position: relative;
+  top: -10px;
+}
+
+@keyframes pop {
+  0% {
+    transform: scale(0.5);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 /* Hide things in mobile */
@@ -182,8 +214,22 @@
     margin-left: -90%;
     margin-top: -10px;
   }
-  .logout-btn {
-    /* width: 10%; */
+  .lg_btn {
+    margin-top: 4px;
+    margin-right: -8px;
+    font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
+      sans-serif;
+    font-size: 1.2rem;
+  }
+  .lg_btn:hover {
+    transition: none !important;
+    color: #000;
+  }
+  .profile-image {
+    width: 50px;
+    height: 50px;
+    border: 2px solid #fff;
+    margin-left: -220px;
   }
 }
 

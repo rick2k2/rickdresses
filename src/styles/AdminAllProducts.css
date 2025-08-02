@@ -42,8 +42,8 @@ thead {
 }
 
 .all_produt_table_heading {
-  font-weight: 600;
   text-transform: capitalize;
+  font-weight: bold;
 }
 
 tbody tr {
@@ -99,6 +99,9 @@ img {
   border-radius: 6px;
   font-size: 14px;
   transition: background 0.3s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .product_modify_btn:hover {

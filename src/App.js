@@ -43,10 +43,14 @@ import AdminAllBill from "./admin/AdminAllBill";
 import AdminDueBill from "./admin/AdminDueBill";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
+import PaymentQr from "./pages/PaymentQr";
+import { useCart } from "./context/CartContext";
 
 function App() {
   const [user, setUser] = useState(null);
+  const { cartItems } = useCart();
 
+  console.log(cartItems);
   useEffect(() => {
     const stored = localStorage.getItem("userInfo");
     if (stored) {
@@ -69,7 +73,7 @@ function App() {
         <LoadingScreen />
       ) : (
         <Router>
-          <Navbar user={user} setUser={setUser} />
+          <Navbar user={user} setUser={setUser} cartItems={cartItems} />
           {!user && <IdlePopup />}
           <Routes>
             {/* Public Routes */}
@@ -81,6 +85,7 @@ function App() {
             <Route path="/product/:id" element={<ProductDetails />} />
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/order-success" element={<OrderSuccess />} />
+            <Route path="/payment" element={<PaymentQr />} />
             <Route path="/faq" element={<FAQ />} />
             <Route path="/returns" element={<Returns />} />
             <Route path="/shipping" element={<Shipping />} />
@@ -93,16 +98,6 @@ function App() {
               element={<Profile user={user} setUser={setUser} />}
             />
             <Route path="/order-history" element={<OrderHistory />} />
-
-            {/* protected route for order history*/}
-            {/* <Route
-              path="/order-history"
-              element={
-                <PrivateRoute>
-                  <OrderHistory />
-                </PrivateRoute>
-              }
-            /> */}
 
             {/* Admin Routes - Protected */}
             <Route
@@ -170,7 +165,6 @@ function App() {
               <Route path="post/delete" element={<AdminDeletePost />} />
               <Route path="post/update" element={<AdminUpdatePost />} />
               <Route path="post/all" element={<AdminallPost />} />
-              {/* <Route path="/admin/update-product/:id" element={<AdminUpdateProduct />} /> */}
             </Route>
 
             {/* 404 Route */}

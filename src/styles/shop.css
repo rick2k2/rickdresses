@@ -91,6 +91,52 @@
   height: 40px;
   animation: spin 0.8s linear infinite;
 }
+.filters {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  justify-content: center;
+  align-items: center;
+  background: #ff6600;
+  padding: 20px;
+  border-radius: 10px;
+  width: 100%;
+}
+.filters input {
+  padding: 10px 80px !important;
+  color: #ff6600;
+  outline: none;
+}
+
+.filters input,
+.filters select {
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2rem;
+  gap: 10px;
+}
+
+.pagination button {
+  padding: 6px 12px;
+  background-color: #ff6600;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.pagination button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
 
 @keyframes spin {
   0% {
@@ -98,5 +144,16 @@
   }
   100% {
     transform: rotate(360deg);
+  }
+}
+@media (max-width: 768px) {
+  .filters {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .filters input,
+  .filters select {
+    width: 100%;
   }
 }

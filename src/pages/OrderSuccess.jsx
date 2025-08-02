@@ -40,6 +40,12 @@ const OrderSuccess = () => {
         >
           View Order History
         </button>
+        <button
+          className="order_history_payment_btn"
+          onClick={() => navigate("/payment")}
+        >
+          Make Payment
+        </button>
       </div>
     </div>
   );

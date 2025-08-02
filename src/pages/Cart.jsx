@@ -25,8 +25,11 @@ const Cart = () => {
       ) : (
         <div className="cart-container">
           {cartItems.map((item) => (
-            <div className="cart-item" key={item.id}>
-              <img src={item.image} alt={item.name} />
+            <div className="cart-item" key={item._id || item.id}>
+              <img
+                src={item.image || "/images/no-image.png"}
+                alt={item.name || "Product"}
+              />
               <div className="item-details">
                 <h3>{item.name}</h3>
                 <p>Price: ₹{item.price}</p>
@@ -34,7 +37,12 @@ const Cart = () => {
                   Quantity:{" "}
                   <select
                     value={item.quantity}
-                    onChange={(e) => updateQuantity(item.id, e.target.value)}
+                    onChange={(e) =>
+                      updateQuantity(
+                        item._id || item.id,
+                        Number(e.target.value)
+                      )
+                    }
                     className="quantity-select"
                   >
                     {Array.from(
@@ -50,7 +58,7 @@ const Cart = () => {
               </div>
               <button
                 className="cart_remove_btn"
-                onClick={() => removeFromCart(item.id)}
+                onClick={() => removeFromCart(item._id || item.id)}
               >
                 Remove
               </button>
@@ -58,7 +66,7 @@ const Cart = () => {
           ))}
 
           <div className="cart-summary">
-            <h3>Total: ₹{totalPrice}</h3>
+            <h3>Total: ₹{totalPrice.toFixed(2)}</h3>
             <Link to="/shop" className="cart_btn_link">
               <button className="buymore-btn">Buy More</button>
             </Link>

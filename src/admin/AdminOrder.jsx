@@ -63,6 +63,24 @@ const AdminOrders = () => {
     }
   };
 
+  const handleDownloadBill = async (orderId) => {
+    try {
+      const res = await axios.get(`/orders/bill/${orderId}`, {
+        responseType: "blob",
+      });
+
+      const url = window.URL.createObjectURL(new Blob([res.data]));
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", `Invoice-${orderId.slice(-6)}.pdf`);
+      document.body.appendChild(link);
+      link.click();
+    } catch (err) {
+      console.error("Bill download failed:", err);
+      toast.error("❌ Failed to download bill");
+    }
+  };
+
   useEffect(() => {
     fetchOrders();
   }, []);
@@ -88,6 +106,7 @@ const AdminOrders = () => {
               <th>Address</th>
               <th>Items</th>
               <th>Total</th>
+              <th>Payment</th>
               <th>Date</th>
               <th>Status</th>
               <th>Actions</th>
@@ -110,6 +129,13 @@ const AdminOrders = () => {
                   </ul>
                 </td>
                 <td>₹{order.total}</td>
+                <td>
+                  {order.isPaid ? (
+                    <span className="paid">✅ Paid</span>
+                  ) : (
+                    <span className="unpaid">❌ Unpaid</span>
+                  )}
+                </td>
                 <td>{new Date(order.createdAt).toLocaleString()}</td>
                 <td>
                   {order.status === "Delivered" ? (
@@ -140,6 +166,12 @@ const AdminOrders = () => {
                     onClick={() => handleDeleteOrder(order._id)}
                   >
                     🗑️ Delete
+                  </button>
+                  <button
+                    className="download-btn admin_order_download"
+                    onClick={() => handleDownloadBill(order._id)}
+                  >
+                    📄 Download Bill
                   </button>
                 </td>
               </tr>

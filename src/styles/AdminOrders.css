@@ -70,6 +70,10 @@
   color: red;
   font-weight: bold;
 }
+.admin_order_download {
+  background: rgb(6, 179, 6) !important;
+  color: #fff;
+}
 
 .admin-orders-table td button {
   margin: 4px 4px 0 0;

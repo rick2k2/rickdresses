@@ -97,7 +97,7 @@ const AdminAllProducts = () => {
                       to="/admin/products/update"
                       className="product_modify_btn"
                     >
-                      Modify
+                      Update
                     </Link>
                   </div>
                 </td>

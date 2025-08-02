@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "../utils/axiosConfig";
 import "../styles/OrderHistory.css";
-import { toast } from "react-toastify"; // ✅ optional toast
+import { toast } from "react-toastify";
 
 const OrderHistory = () => {
   const [orders, setOrders] = useState([]);
@@ -14,7 +14,6 @@ const OrderHistory = () => {
     const fetchOrders = async () => {
       try {
         const { data } = await axios.get("/orders/my");
-        // ✅ Optional: Sort orders by date (latest first)
         const sorted = [...data].sort(
           (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
         );
@@ -36,8 +35,8 @@ const OrderHistory = () => {
     if (!confirmCancel) return;
 
     try {
-      setCancelingOrderId(id); // disable button
-      await axios.delete(`/orders/delete/${id}`); // ✅ fixed path
+      setCancelingOrderId(id);
+      await axios.delete(`/orders/delete/${id}`);
       toast.success("Order cancelled successfully!");
       setRefresh((prev) => !prev);
     } catch (err) {
@@ -75,6 +74,7 @@ const OrderHistory = () => {
               <th>Items</th>
               <th>Total</th>
               <th>Status</th>
+              <th>Payment</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -92,6 +92,15 @@ const OrderHistory = () => {
                     }`}
                   >
                     {order.status}
+                  </span>
+                </td>
+                <td>
+                  <span
+                    className={`status-tag ${
+                      order.paymentStatus === "Paid" ? "paid" : "unpaid"
+                    }`}
+                  >
+                    {order.paymentStatus === "Paid" ? "Paid" : "Due"}
                   </span>
                 </td>
                 <td>

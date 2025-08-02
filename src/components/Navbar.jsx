@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import "../styles/Navbar.css";
 import { toast } from "react-toastify";
 
-const Navbar = ({ user, setUser }) => {
+const Navbar = ({ user, setUser, cartItems }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const navigate = useNavigate();
@@ -67,9 +67,12 @@ const Navbar = ({ user, setUser }) => {
           Shop
         </Link>
       </li>
-      <li>
-        <Link to="/cart" onClick={closeMenu}>
+      <li className="cart-link-with-badge">
+        <Link to="/cart" onClick={closeMenu} className="cart-link">
           Cart
+          {cartItems && cartItems.length > 0 && (
+            <span className="cart_badge">{cartItems.length}</span>
+          )}
         </Link>
       </li>
 
@@ -94,7 +97,7 @@ const Navbar = ({ user, setUser }) => {
             </Link>
           </li>
           <li className="logout-btn-container">
-            <button className="logout-btn" onClick={handleLogout}>
+            <button className="logout_btn_navbar" onClick={handleLogout}>
               Logout
             </button>
           </li>

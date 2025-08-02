@@ -94,6 +94,22 @@
   margin-top: 40px;
 }
 
+.status-tag.paid {
+  background-color: #d4f5d4;
+  color: green;
+  font-weight: 600;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.status-tag.unpaid {
+  background-color: #ffd6d6;
+  color: red;
+  font-weight: 600;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .order-history-table {

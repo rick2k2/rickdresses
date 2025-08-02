@@ -37,7 +37,7 @@ const UpdateProduct = () => {
               <p>Price: ₹{prod.price}</p>
               <button
                 onClick={() => navigate(`/admin/update-product/${prod._id}`)}
-                className="edit-btn"
+                className="update_btn_admin_product_Listing"
               >
                 Update
               </button>
