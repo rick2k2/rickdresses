@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
+// components import
 import Navbar from "./components/Navbar";
+import LoadingScreen from "./components/LoadingScreen";
+
+// pages import
 import Home from "./pages/Home";
 import Shop from "./pages/Shop";
 import Cart from "./pages/Cart";
@@ -12,6 +17,17 @@ import FAQ from "./pages/FAQ";
 import Returns from "./pages/Returns";
 import Shipping from "./pages/Shipping";
 import Contact from "./pages/Contact";
+import OrderSuccess from "./pages/OrderSuccess";
+import PageNotFound from "./pages/PageNotFound";
+import Profile from "./pages/Profile.jsx";
+import IdlePopup from "./pages/IdlePopup";
+import OrderHistory from "./pages/OrderHistory";
+import ForgotPassword from "./pages/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword";
+import PaymentQr from "./pages/PaymentQr";
+import PaymentSuccess from "./pages/PaymentSuccess";
+
+// admin import
 import AdminDashboard from "./admin/AdminDashboard";
 import AdminHome from "./admin/AdminHome";
 import AdminUsers from "./admin/AdminUsers";
@@ -22,28 +38,26 @@ import AdminUpdateProductListing from "./admin/AdminUpdateProductListing";
 import AdminUpdateProduct from "./admin/AdminUpdateProducts";
 import AdminDeleteProduct from "./admin/AdminDeleteProduct";
 import AdminAllProducts from "./admin/AdminAllProducts";
+import AdminAllPayments from "./admin/AdminAllPayments";
 import AdminOrder from "./admin/AdminOrder";
-import OrderSuccess from "./pages/OrderSuccess";
-import PageNotFound from "./pages/PageNotFound";
-import Profile from "./pages/Profile.jsx";
 import AdminRoute from "./components/AdminRoute";
 import AdminPostMenu from "./admin/AdminPostMenu";
 import AdminCreatePost from "./admin/AdminCreatePost";
 import AdminDeletePost from "./admin/AdminDeletePost";
 import AdminUpdatePost from "./admin/AdminUpdatePost";
 import AdminallPost from "./admin/AdminallPost";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import LoadingScreen from "./components/LoadingScreen";
-import IdlePopup from "./pages/IdlePopup";
-import OrderHistory from "./pages/OrderHistory";
 import AdminBillMenu from "./admin/AdminBillMenu";
 import AdminBilling from "./admin/AdminBilling";
 import AdminAllBill from "./admin/AdminAllBill";
 import AdminDueBill from "./admin/AdminDueBill";
-import ForgotPassword from "./pages/ForgotPassword";
-import ResetPassword from "./pages/ResetPassword";
-import PaymentQr from "./pages/PaymentQr";
+import AdminContact from "./admin/AdminContact";
+import AdminContactMessageCard from "./admin/AdminContactMessageCard";
+
+// toast related import
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+// cart
 import { useCart } from "./context/CartContext";
 
 function App() {
@@ -84,8 +98,10 @@ function App() {
             <Route path="/login" element={<Login setUser={setUser} />} />
             <Route path="/product/:id" element={<ProductDetails />} />
             <Route path="/checkout" element={<Checkout />} />
+            <Route path="/order-history" element={<OrderHistory />} />
             <Route path="/order-success" element={<OrderSuccess />} />
-            <Route path="/payment" element={<PaymentQr />} />
+            <Route path="/payment/:id" element={<PaymentQr />} />
+            <Route path="/payment/success" element={<PaymentSuccess />} />
             <Route path="/faq" element={<FAQ />} />
             <Route path="/returns" element={<Returns />} />
             <Route path="/shipping" element={<Shipping />} />
@@ -97,7 +113,6 @@ function App() {
               path="/profile"
               element={<Profile user={user} setUser={setUser} />}
             />
-            <Route path="/order-history" element={<OrderHistory />} />
 
             {/* Admin Routes - Protected */}
             <Route
@@ -165,6 +180,12 @@ function App() {
               <Route path="post/delete" element={<AdminDeletePost />} />
               <Route path="post/update" element={<AdminUpdatePost />} />
               <Route path="post/all" element={<AdminallPost />} />
+              <Route path="allpayments" element={<AdminAllPayments />} />
+              <Route path="allcontacts" element={<AdminContact />} />
+              <Route
+                path="allcontacts/message"
+                element={<AdminContactMessageCard />}
+              />
             </Route>
 
             {/* 404 Route */}

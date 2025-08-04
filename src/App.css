@@ -10,3 +10,9 @@ body {
 .App {
   text-align: center;
 }
+.Toastify__close-button {
+  color: #ff0000 !important; /* make it red */
+  font-size: 16px !important;
+  right: 10px;
+  top: 10px;
+}

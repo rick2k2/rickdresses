@@ -5,9 +5,9 @@ import "../styles/OrderSuccess.css";
 const OrderSuccess = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { orderDetails } = location.state || {};
+  const { orderDetails, orderId } = location.state || {};
 
-  if (!orderDetails) {
+  if (!orderDetails || !orderId) {
     return <h2>❌ No order data found.</h2>;
   }
 
@@ -42,7 +42,7 @@ const OrderSuccess = () => {
         </button>
         <button
           className="order_history_payment_btn"
-          onClick={() => navigate("/payment")}
+          onClick={() => navigate(`/payment/${orderId}`)}
         >
           Make Payment
         </button>

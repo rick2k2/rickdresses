@@ -9,11 +9,13 @@ const OrderHistory = () => {
   const [error, setError] = useState("");
   const [refresh, setRefresh] = useState(false);
   const [cancelingOrderId, setCancelingOrderId] = useState(null);
+  const [payingOrderId, setPayingOrderId] = useState(null);
 
   useEffect(() => {
     const fetchOrders = async () => {
       try {
         const { data } = await axios.get("/orders/my");
+        console.log(data);
         const sorted = [...data].sort(
           (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
         );
@@ -46,6 +48,17 @@ const OrderHistory = () => {
     }
   };
 
+  const handlePayment = async (order) => {
+    try {
+      setPayingOrderId(order._id);
+      window.location.href = `/payment/${order._id}`;
+    } catch (error) {
+      toast.error("Payment initiation failed.");
+    } finally {
+      setPayingOrderId(null);
+    }
+  };
+
   if (loading)
     return (
       <div className="order-loading">
@@ -66,62 +79,80 @@ const OrderHistory = () => {
       {orders.length === 0 ? (
         <p>No orders found.</p>
       ) : (
-        <table className="order-history-table">
-          <thead>
-            <tr>
-              <th>Order ID</th>
-              <th>Date</th>
-              <th>Items</th>
-              <th>Total</th>
-              <th>Status</th>
-              <th>Payment</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {orders.map((order) => (
-              <tr key={order._id}>
-                <td>{order._id.slice(-6)}</td>
-                <td>{new Date(order.createdAt).toLocaleDateString()}</td>
-                <td>{order.items.length}</td>
-                <td>₹{order.total.toFixed(2)}</td>
-                <td>
-                  <span
-                    className={`status-tag ${
-                      order.status === "Delivered" ? "delivered" : "pending"
-                    }`}
-                  >
-                    {order.status}
-                  </span>
-                </td>
-                <td>
-                  <span
-                    className={`status-tag ${
-                      order.paymentStatus === "Paid" ? "paid" : "unpaid"
-                    }`}
-                  >
-                    {order.paymentStatus === "Paid" ? "Paid" : "Due"}
-                  </span>
-                </td>
-                <td>
-                  {order.status === "Pending" ? (
-                    <button
-                      className="cancel-btn"
-                      onClick={() => handleCancel(order._id)}
-                      disabled={cancelingOrderId === order._id}
-                    >
-                      {cancelingOrderId === order._id
-                        ? "Cancelling..."
-                        : "Cancel"}
-                    </button>
-                  ) : (
-                    <span className="no-action">—</span>
-                  )}
-                </td>
+        <div className="order-history-table-wrapper">
+          <table className="order-history-table">
+            <thead>
+              <tr>
+                <th>Order ID</th>
+                <th>Date</th>
+                <th>Items</th>
+                <th>Total</th>
+                <th>Status</th>
+                <th>Payment</th>
+                <th>Payment Mode</th>
+                <th>Action</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {orders.map((order) => (
+                <tr key={order._id}>
+                  <td>{order._id.slice(-6)}</td>
+                  <td>{new Date(order.createdAt).toLocaleDateString()}</td>
+                  <td>{order.items.length}</td>
+                  <td>₹{order.total.toFixed(2)}</td>
+                  <td>
+                    <span
+                      className={`status-tag ${
+                        order.status === "Delivered" ? "delivered" : "pending"
+                      }`}
+                    >
+                      {order.status}
+                    </span>
+                  </td>
+                  <td>
+                    <span
+                      className={`status-tag ${
+                        order.payment.status === "approved" ? "paid" : "unpaid"
+                      }`}
+                    >
+                      {order.payment.status === "approved" ? "Paid" : "Due"}
+                    </span>
+                  </td>
+                  <td>{order.payment.method}</td>
+                  <td>
+                    {order.status === "Pending" ? (
+                      <div className="order-actions">
+                        <button
+                          className="cancel-btn"
+                          onClick={() => handleCancel(order._id)}
+                          disabled={cancelingOrderId === order._id}
+                        >
+                          {cancelingOrderId === order._id
+                            ? "Cancelling..."
+                            : "Cancel"}
+                        </button>
+
+                        {order.payment.status !== "approved" && (
+                          <button
+                            className="pay-btn pay_btn_order_history"
+                            onClick={() => handlePayment(order)}
+                            disabled={payingOrderId === order._id}
+                          >
+                            {payingOrderId === order._id
+                              ? "Redirecting..."
+                              : "Make Payment"}
+                          </button>
+                        )}
+                      </div>
+                    ) : (
+                      <span className="no-action">—</span>
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
     </div>
   );

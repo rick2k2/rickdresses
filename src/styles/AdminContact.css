@@ -1,0 +1,20 @@
+.admin-contact-page {
+  padding: 20px;
+}
+
+.admin-contact-page h2 {
+  margin-bottom: 20px;
+}
+
+.admin-contact-page {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+}
+.admin_contact_card_container {
+  display: flex;
+  gap: 20px;
+}

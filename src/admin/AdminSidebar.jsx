@@ -17,6 +17,9 @@ const AdminSidebar = () => {
           <Link to="/admin/orders">Orders</Link>
         </li>
         <li>
+          <Link to="/admin/allpayments">Payments</Link>
+        </li>
+        <li>
           <Link to="/admin/users">Users</Link>
         </li>
         <li>
@@ -24,6 +27,9 @@ const AdminSidebar = () => {
         </li>
         <li>
           <Link to="/admin/bills">Create Bill</Link>
+        </li>
+        <li>
+          <Link to="/admin/allcontacts">Contact Message</Link>
         </li>
       </ul>
     </div>

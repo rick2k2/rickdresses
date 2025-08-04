@@ -58,7 +58,12 @@ const Checkout = () => {
 
       if (res.status === 201 || res.data.success) {
         clearCart();
-        navigate("/order-success", { state: { orderDetails } });
+        navigate("/order-success", {
+          state: {
+            orderDetails,
+            orderId: res.data.orderId,
+          },
+        });
       } else {
         alert("Failed to save order. Try again.");
       }
@@ -117,8 +122,6 @@ const Checkout = () => {
           >
             <option value="Cash on Delivery">Cash on Delivery</option>
             <option value="Online">Online</option>
-            <option value="Card">Card</option>
-            <option value="UPI">UPI</option>
           </select>
           <button type="submit" disabled={loading}>
             {loading ? "Placing Order..." : "🛒 Place Order"}

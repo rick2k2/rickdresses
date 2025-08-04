@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "../styles/Contact.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import axios from "../utils/axiosConfig";
 
 const Contact = () => {
   // State for form inputs
@@ -9,29 +10,33 @@ const Contact = () => {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
 
-  const handleSend = () => {
+  const handleSend = async () => {
     if (!name || !email || !message) {
       toast.error("Please fill in all fields before sending.");
       return;
     }
 
-    toast.success(
-      "Thank you for contacting us. Your message has been received. We will reach out to you very soon.",
-      {
-        position: "bottom-right",
-        autoClose: 4000,
-        hideProgressBar: false,
-        pauseOnHover: true,
-        draggable: true,
-      }
-    );
+    try {
+      await axios.post("/contact", { name, email, message });
 
-    // Clear fields after toast
-    setName("");
-    setEmail("");
-    setMessage("");
+      toast.success(
+        "Thank you for contacting us. Your message has been received. We will reach out to you very soon.",
+        {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          pauseOnHover: true,
+          draggable: true,
+        }
+      );
+
+      setName("");
+      setEmail("");
+      setMessage("");
+    } catch (err) {
+      toast.error("Failed to send message. Please try again.");
+    }
   };
-
   return (
     <div className="page-container-contact">
       <h2>Contact Us</h2>

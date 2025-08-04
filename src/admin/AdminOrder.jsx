@@ -107,6 +107,7 @@ const AdminOrders = () => {
               <th>Items</th>
               <th>Total</th>
               <th>Payment</th>
+              <th>Payment Mode</th>
               <th>Date</th>
               <th>Status</th>
               <th>Actions</th>
@@ -130,12 +131,13 @@ const AdminOrders = () => {
                 </td>
                 <td>₹{order.total}</td>
                 <td>
-                  {order.isPaid ? (
+                  {order.payment.status === "approved" ? (
                     <span className="paid">✅ Paid</span>
                   ) : (
                     <span className="unpaid">❌ Unpaid</span>
                   )}
                 </td>
+                <td>{order.payment.method}</td>
                 <td>{new Date(order.createdAt).toLocaleString()}</td>
                 <td>
                   {order.status === "Delivered" ? (

@@ -29,7 +29,11 @@ const UpdateUser = () => {
   const handleUpdate = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`/users/${id}`, user);
+      await axios.put(`/users/${id}/admin`, {
+        name: user.name,
+        email: user.email,
+        isAdmin: user.isAdmin,
+      });
       toast.success("User updated successfully");
       navigate("/admin/users");
     } catch (err) {
