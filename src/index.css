@@ -7,3 +7,18 @@ body {
   scroll-behavior: smooth;
   background-color: #fff;
 }
+
+/* ✅ Clean up react-toastify close button */
+.Toastify__close-button {
+  background: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  color: inherit !important;
+  font-size: 1.2rem !important;
+  opacity: 0.7;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.Toastify__close-button:hover {
+  opacity: 1;
+}
