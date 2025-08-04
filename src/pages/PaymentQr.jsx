@@ -138,7 +138,7 @@ const PaymentQr = () => {
 
         <div className="qr-section">
           <img
-            src="/assests/GpayQr.jpg"
+            src="https://res.cloudinary.com/dspxus0so/image/upload/v1754337012/Gpayqr_ki3tgw.jpg"
             alt="Rick Dresses UPI QR"
             className="qr-image"
           />
