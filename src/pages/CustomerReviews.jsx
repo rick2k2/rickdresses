@@ -162,7 +162,11 @@ const CustomerReviews = () => {
       <h2 className="section-title">What Our Customers Say</h2>
       <Slider {...settings}>
         {reviews.map((review, index) => (
-          <div className="review-card fade-up" key={index}>
+          <div
+            className="review-card fade-up"
+            key={index}
+            style={{ animationDelay: `${index * 0.2}s` }}
+          >
             <img src={review.img} alt={review.name} className="review-img" />
             <p className="review-text">“{review.text}”</p>
             <div className="review-stars">
