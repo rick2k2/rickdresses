@@ -15,10 +15,6 @@ const ProductDetails = () => {
   const { addToCart } = useCart();
 
   useEffect(() => {
-    toast.info("🔔 Toast test working!");
-  }, []);
-
-  useEffect(() => {
     const fetchProduct = async () => {
       try {
         const res = await axios.get(`/products/${id}`);
