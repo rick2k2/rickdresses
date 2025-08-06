@@ -22,16 +22,16 @@
 }
 
 .replied {
-  color: green;
-  background: #000;
+  color: #fff;
+  background: green;
   padding: 8px 10px;
   border: 1px dashed #fff;
   border-radius: 10px;
 }
 
 .pending {
-  color: orange;
-  background: #000;
+  color: #fff;
+  background: rgb(245, 161, 7);
   padding: 8px 10px;
   border: 1px dashed #fff;
   border-radius: 10px;
