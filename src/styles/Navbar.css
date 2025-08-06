@@ -20,7 +20,7 @@
   transition: 0.3s ease-in-out;
 }
 .logo:hover {
-  color: black; /* Light color on hover */
+  color: black;
 }
 
 /* Nav links on desktop */
@@ -68,6 +68,8 @@
   background-color: white;
   border-radius: 2px;
 }
+
+/* Logout button */
 .logout-btn-container {
   display: flex;
   align-items: center;
@@ -90,6 +92,7 @@
   color: #000 !important;
   transform: none;
 }
+
 /* Overlay */
 .overlay {
   position: fixed;
@@ -134,16 +137,16 @@
   color: black;
 }
 .dropdown-menu.open {
-  top: 60px; /* appear below navbar */
+  top: 60px;
 }
 
+/* Profile image and initials */
 .profile-image-link {
   display: flex;
   align-items: center;
   margin-left: 10px;
   margin-top: -10px;
 }
-
 .profile-image {
   width: 35px;
   height: 35px;
@@ -151,7 +154,6 @@
   object-fit: cover;
   border: 2px solid white;
 }
-
 .initials {
   background-color: transparent;
   border: 3px solid #fff;
@@ -167,11 +169,26 @@
   border: 2px solid white;
 }
 
+/* ✅ Center profile icon on mobile */
 .mobile-profile-icon {
   display: flex;
   justify-content: center;
-  margin-top: 10px;
+  align-items: center;
+  margin-top: 1rem;
 }
+@media (max-width: 768px) {
+  .profile-image-link {
+    margin: 0;
+  }
+  .profile-image,
+  .initials {
+    margin: 0 auto;
+    width: 50px;
+    height: 50px;
+  }
+}
+
+/* Logout button mobile adjustment */
 .lg_btn {
   background: none !important;
   margin-top: -4px;
@@ -183,6 +200,7 @@
   color: #000;
 }
 
+/* Cart badge */
 .cart_badge {
   background: red;
   color: white;
@@ -204,32 +222,32 @@
   }
 }
 
-/* Hide things in mobile */
+/* Hide desktop-only elements in mobile */
 @media (max-width: 768px) {
   .nav-links,
   .logo {
     display: none;
   }
+
   .logout-btn-container {
     margin-left: -90%;
     margin-top: -10px;
   }
+
   .lg_btn {
     margin-top: 4px;
     margin-right: -8px;
-    font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
-      sans-serif;
     font-size: 1.2rem;
   }
+
   .lg_btn:hover {
     transition: none !important;
     color: #000;
   }
+
+  /* Override old profile image offset */
   .profile-image {
-    width: 50px;
-    height: 50px;
-    border: 2px solid #fff;
-    margin-left: -220px;
+    margin-left: 0;
   }
 }
 
