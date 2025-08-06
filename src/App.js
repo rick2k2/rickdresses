@@ -19,6 +19,7 @@ import Shipping from "./pages/Shipping";
 import Contact from "./pages/Contact";
 import OrderSuccess from "./pages/OrderSuccess";
 import PageNotFound from "./pages/PageNotFound";
+import UnderConstruction from "./pages/UnderConstruction";
 import Profile from "./pages/Profile.jsx";
 import IdlePopup from "./pages/IdlePopup";
 import OrderHistory from "./pages/OrderHistory";
@@ -83,6 +84,7 @@ function App() {
 
   return (
     <>
+      <UnderConstruction />
       {loading ? (
         <LoadingScreen />
       ) : (
