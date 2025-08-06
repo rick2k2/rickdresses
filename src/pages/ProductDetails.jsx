@@ -5,6 +5,7 @@ import "../styles/ProductDetails.css";
 import { useCart } from "../context/CartContext";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { motion } from "framer-motion";
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -12,6 +13,10 @@ const ProductDetails = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const { addToCart } = useCart();
+
+  useEffect(() => {
+    toast.info("🔔 Toast test working!");
+  }, []);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -27,6 +32,7 @@ const ProductDetails = () => {
     fetchProduct();
   }, [id]);
 
+  // handel add to cart function
   const handleAddToCart = () => {
     addToCart({
       id: product._id,
@@ -53,12 +59,76 @@ const ProductDetails = () => {
       <img src={product.image} alt={product.name} />
       <div className="details">
         <h2>{product.name}</h2>
-        <p className="price">₹{product.price}</p>
-        <p className="desc">{product.description}</p>
+
+        <motion.div
+          className="pricing-line"
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+        >
+          {product.discountPercent > 0 ? (
+            <>
+              <motion.p className="original-price">₹{product.price}</motion.p>
+              <motion.p className="offer-price">
+                ₹{product.offerPrice || product.price}
+              </motion.p>
+              <motion.p className="discount">
+                ({product.discountPercent}% OFF)
+              </motion.p>
+            </>
+          ) : (
+            <motion.p className="offer-price">₹{product.price}</motion.p>
+          )}
+        </motion.div>
+
+        <motion.p
+          className={`stock ${
+            product.countInStock > 0 ? "in-stock" : "out-stock"
+          }`}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.4, delay: 0.4 }}
+        >
+          {product.countInStock > 0 ? "✅ In Stock" : "❌ Out of Stock"}
+        </motion.p>
+
+        {product.countInStock > 0 && product.countInStock <= 3 && (
+          <motion.p
+            className="low-stock"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.4, delay: 0.5 }}
+          >
+            🔥 Only {product.countInStock} left!
+          </motion.p>
+        )}
+
+        <motion.p
+          className="desc"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.6 }}
+        >
+          {product.description}
+        </motion.p>
+
         <div className="buttons">
-          <Link to="/cart" className="cart-btn">
-            <button onClick={handleAddToCart}>Add to Cart</button>
-          </Link>
+          <button
+            onClick={() => {
+              if (product.countInStock > 0) {
+                handleAddToCart();
+              } else {
+                toast.success("Product is out of stock!");
+              }
+            }}
+            // disabled={product.countInStock === 0}
+            className={`cart-btn ${
+              product.countInStock === 0 ? "disabled" : ""
+            }`}
+          >
+            Add to Cart
+          </button>
+
           <Link to="/shop" className="back-btn">
             <button className="cart-btn">Back to Shop</button>
           </Link>

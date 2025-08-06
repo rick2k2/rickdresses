@@ -21,6 +21,7 @@ const Shop = () => {
 
   const PRODUCTS_PER_PAGE = isHome ? 8 : 20;
 
+  // fetch the products
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -37,6 +38,7 @@ const Shop = () => {
     fetchProducts();
   }, []);
 
+  // sort ,filter search and pagination
   useEffect(() => {
     let filtered = [...products];
 
@@ -75,14 +77,38 @@ const Shop = () => {
     startIdx + PRODUCTS_PER_PAGE
   );
 
-  const handleAddToCart = (product) => {
-    addToCart({
-      id: product._id,
-      name: product.name,
-      price: product.price,
-      image: product.image,
-    });
-    toast.success("🛒 Product added to cart!");
+  // add to cart function
+  const handleAddToCart = async (product) => {
+    if (product.countInStock === 0) {
+      toast.error("❌ This item is out of stock!");
+      return;
+    }
+
+    try {
+      // Reduce stock from backend
+      const res = await axios.patch(`/products/reduce-stock/${product._id}`);
+
+      // Update the local state for product
+      const updatedProducts = products.map((p) =>
+        p._id === product._id
+          ? { ...p, countInStock: res.data.countInStock }
+          : p
+      );
+      setProducts(updatedProducts);
+
+      // Add to cart
+      addToCart({
+        id: product._id,
+        name: product.name,
+        price: product.price,
+        image: product.image,
+      });
+
+      toast.success("🛒 Product added to cart!");
+    } catch (error) {
+      console.error(error);
+      toast.error("Something went wrong while reducing stock");
+    }
   };
 
   return (
@@ -129,21 +155,65 @@ const Shop = () => {
             </div>
           ) : (
             <div className="product-grid">
-              {paginatedProducts.map((p) => (
-                <div className="product-card" key={p._id}>
-                  <img src={p.image} alt={p.name} />
-                  <h3>{p.name}</h3>
-                  <p>₹{p.price}</p>
-                  <div className="product-buttons">
-                    <Link to={`/product/${p._id}`}>
-                      <button>View Details</button>
-                    </Link>
-                    <button onClick={() => handleAddToCart(p)}>
-                      Add to Cart
-                    </button>
+              {paginatedProducts.map((p) => {
+                const lowStock = p.countInStock > 0 && p.countInStock <= 3;
+                const offerPrice = (
+                  p.price -
+                  (p.price * p.discountPercent) / 100
+                ).toFixed(2);
+
+                return (
+                  <div className="product-card" key={p._id}>
+                    <img src={p.image} alt={p.name} />
+                    <h3>{p.name}</h3>
+
+                    <div className="price-section">
+                      {p.discountPercent ? (
+                        <>
+                          <p className="offer-price">₹{offerPrice}</p>
+                          <p className="original-price">
+                            ₹{p.price.toFixed(2)}
+                          </p>
+                          <p className="discount-badge">
+                            Save {p.discountPercent}%
+                          </p>
+                        </>
+                      ) : (
+                        <p className="normal-price">₹{p.price.toFixed(2)}</p>
+                      )}
+                    </div>
+
+                    <p
+                      className={
+                        p.countInStock > 0
+                          ? "stock-status in-stock"
+                          : "stock-status out-of-stock"
+                      }
+                    >
+                      {p.countInStock > 0 ? "In Stock" : "Out of Stock"}
+                    </p>
+
+                    {lowStock && (
+                      <p className="low-stock-badge">
+                        🔥 Only {p.countInStock} left!
+                      </p>
+                    )}
+
+                    <div className="product-buttons">
+                      <Link to={`/product/${p._id}`}>
+                        <button>View Details</button>
+                      </Link>
+                      <button
+                        onClick={() => handleAddToCart(p)}
+                        disabled={p.countInStock === 0}
+                        className={p.countInStock === 0 ? "disabled-btn" : ""}
+                      >
+                        {p.countInStock === 0 ? "Out of Stock" : "Add to Cart"}
+                      </button>
+                    </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           )}
 

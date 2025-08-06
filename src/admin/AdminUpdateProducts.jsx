@@ -13,6 +13,7 @@ const AdminUpdateProduct = () => {
     category: "",
     countInStock: "",
     description: "",
+    discountPercent: "",
   });
   const [imageFile, setImageFile] = useState(null);
 
@@ -38,6 +39,15 @@ const AdminUpdateProduct = () => {
     setImageFile(e.target.files[0]);
   };
 
+  const calculateOfferPrice = () => {
+    const price = parseFloat(product.price);
+    const discount = parseFloat(product.discountPercent);
+    if (!isNaN(price) && !isNaN(discount)) {
+      return price - (price * discount) / 100;
+    }
+    return price;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -46,6 +56,10 @@ const AdminUpdateProduct = () => {
       Object.entries(product).forEach(([key, value]) => {
         formData.append(key, value);
       });
+
+      // Add calculated offerPrice
+      formData.append("offerPrice", calculateOfferPrice());
+
       if (imageFile) {
         formData.append("image", imageFile);
       }
@@ -57,7 +71,7 @@ const AdminUpdateProduct = () => {
           headers: {
             "Content-Type": "multipart/form-data",
           },
-          withCredentials: true, // if you're using cookies for auth
+          withCredentials: true,
         }
       );
 
@@ -74,6 +88,7 @@ const AdminUpdateProduct = () => {
       <input
         name="name"
         value={product.name}
+        placeholder="Product Name"
         onChange={handleChange}
         required
       />
@@ -81,6 +96,7 @@ const AdminUpdateProduct = () => {
         name="price"
         type="number"
         value={product.price}
+        placeholder="Price"
         onChange={handleChange}
         required
       />
@@ -88,12 +104,14 @@ const AdminUpdateProduct = () => {
       <input
         name="brand"
         value={product.brand}
+        placeholder="Brand"
         onChange={handleChange}
         required
       />
       <input
         name="category"
         value={product.category}
+        placeholder="Category"
         onChange={handleChange}
         required
       />
@@ -101,14 +119,32 @@ const AdminUpdateProduct = () => {
         name="countInStock"
         type="number"
         value={product.countInStock}
+        placeholder="Stock Count"
         onChange={handleChange}
         required
       />
       <textarea
         name="description"
         value={product.description}
+        placeholder="Description"
         onChange={handleChange}
       ></textarea>
+
+      <input
+        name="discountPercent"
+        type="number"
+        value={product.discountPercent}
+        placeholder="Discount (%)"
+        onChange={handleChange}
+      />
+
+      <p>
+        <strong>Offer Price:</strong>{" "}
+        {product.price && product.discountPercent
+          ? `₹${calculateOfferPrice().toFixed(2)}`
+          : "N/A"}
+      </p>
+
       <button type="submit">Update</button>
     </form>
   );

@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-
+import { toast } from "react-toastify";
+import axios from "../utils/axiosConfig";
 const CartContext = createContext();
-
 export const useCart = () => useContext(CartContext);
 
 export const CartProvider = ({ children }) => {
@@ -12,10 +12,12 @@ export const CartProvider = ({ children }) => {
 
   const [checkoutData, setCheckoutData] = useState(null); // ✅ form info save korar jonno
 
+  // set item in local storage
   useEffect(() => {
     localStorage.setItem("rick-cart", JSON.stringify(cartItems));
   }, [cartItems]);
 
+  // add to cart
   const addToCart = (product) => {
     setCartItems((prev) => {
       const exists = prev.find((item) => item.id === product.id);
@@ -32,10 +34,18 @@ export const CartProvider = ({ children }) => {
     });
   };
 
-  const removeFromCart = (id) => {
-    setCartItems((prev) => prev.filter((item) => item.id !== id));
+  // remove from cart
+  const removeFromCart = async (id) => {
+    try {
+      await axios.patch(`/products/increase-stock/${id}`);
+      setCartItems((prev) => prev.filter((item) => item.id !== id));
+      toast.success("🧺 Product removed and stock restored!");
+    } catch (error) {
+      toast.success("⚠️ Could not restore stock. Try again.");
+    }
   };
 
+  // update quantity
   const updateQuantity = (id, quantity) => {
     setCartItems((prev) =>
       prev.map((item) =>

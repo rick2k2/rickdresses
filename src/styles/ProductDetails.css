@@ -91,3 +91,47 @@
     transform: rotate(360deg);
   }
 }
+.pricing-line {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+.original-price {
+  text-decoration: line-through;
+  color: grey;
+  font-size: 1rem;
+}
+
+.discount {
+  color: red;
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+.offer-price {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #e67300;
+}
+
+.in-stock {
+  color: green;
+  font-weight: bold;
+}
+
+.out-stock {
+  color: red;
+  font-weight: bold;
+}
+
+.low-stock {
+  color: #e60000;
+  font-weight: bold;
+}
+
+.cart-btn.disabled {
+  background-color: grey !important;
+  cursor: not-allowed;
+  opacity: 0.6;
+}

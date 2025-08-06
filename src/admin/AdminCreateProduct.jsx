@@ -1,12 +1,14 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import "../styles/CreateProduct.css";
 import { toast } from "react-toastify";
 
-const CreateProduct = () => {
+const AdminCreateProduct = () => {
   const [product, setProduct] = useState({
     name: "",
     price: "",
+    discountPercent: "",
+    offerPrice: 0,
     brand: "",
     category: "",
     countInStock: "",
@@ -14,6 +16,18 @@ const CreateProduct = () => {
   });
 
   const [imageFile, setImageFile] = useState(null);
+
+  // Auto-calculate offerPrice when price or discountPercent changes
+  useEffect(() => {
+    if (product.price && product.discountPercent) {
+      const offer =
+        product.price - (product.price * product.discountPercent) / 100;
+      setProduct((prev) => ({
+        ...prev,
+        offerPrice: Math.round(offer),
+      }));
+    }
+  }, [product.price, product.discountPercent]);
 
   const handleChange = (e) => {
     setProduct({ ...product, [e.target.name]: e.target.value });
@@ -34,12 +48,10 @@ const CreateProduct = () => {
     try {
       const formData = new FormData();
 
-      // Append fields
       Object.entries(product).forEach(([key, value]) => {
         formData.append(key, value);
       });
 
-      // Append image file
       formData.append("image", imageFile);
 
       await axios.post(
@@ -54,10 +66,11 @@ const CreateProduct = () => {
 
       toast.success("🎉 Product created successfully!");
 
-      // Reset form
       setProduct({
         name: "",
         price: "",
+        discountPercent: "",
+        offerPrice: 0,
         brand: "",
         category: "",
         countInStock: "",
@@ -81,20 +94,40 @@ const CreateProduct = () => {
         onChange={handleChange}
         required
       />
+
       <input
         name="price"
         type="number"
         value={product.price}
-        placeholder="Price"
+        placeholder="Original Price"
         onChange={handleChange}
         required
       />
+
+      <input
+        name="discountPercent"
+        type="number"
+        value={product.discountPercent}
+        placeholder="Discount %"
+        onChange={handleChange}
+        required
+      />
+
+      <input
+        name="offerPrice"
+        type="number"
+        value={product.offerPrice}
+        placeholder="Offer Price (auto)"
+        readOnly
+      />
+
       <input
         type="file"
         accept="image/*"
         onChange={handleImageChange}
         required
       />
+
       <input
         name="brand"
         value={product.brand}
@@ -102,6 +135,7 @@ const CreateProduct = () => {
         onChange={handleChange}
         required
       />
+
       <input
         name="category"
         value={product.category}
@@ -109,6 +143,7 @@ const CreateProduct = () => {
         onChange={handleChange}
         required
       />
+
       <input
         name="countInStock"
         type="number"
@@ -117,6 +152,7 @@ const CreateProduct = () => {
         onChange={handleChange}
         required
       />
+
       <textarea
         name="description"
         value={product.description}
@@ -129,4 +165,4 @@ const CreateProduct = () => {
   );
 };
 
-export default CreateProduct;
+export default AdminCreateProduct;

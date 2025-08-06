@@ -58,7 +58,10 @@ const AdminAllProducts = () => {
               <th className="all_produt_table_heading">Brand</th>
               <th className="all_produt_table_heading">Category</th>
               <th className="all_produt_table_heading">Price</th>
+              <th className="all_produt_table_heading">Discount %</th>
+              <th className="all_produt_table_heading">Offer Price</th>
               <th className="all_produt_table_heading">Stock</th>
+              <th className="all_produt_table_heading">Status</th>
               <th className="all_produt_table_heading">Description</th>
               <th className="all_produt_table_heading">Action</th>
             </tr>
@@ -81,7 +84,14 @@ const AdminAllProducts = () => {
                 <td>{product.brand}</td>
                 <td>{product.category}</td>
                 <td>₹{product.price}</td>
+                <td>{product.discountPercent}%</td>
+                <td>₹{product.offerPrice}</td>
                 <td>{product.countInStock}</td>
+                <td
+                  style={{ color: product.countInStock > 0 ? "green" : "red" }}
+                >
+                  {product.countInStock > 0 ? "In Stock" : "Out of Stock"}
+                </td>
                 <td className="admin_product_description">
                   {product.description}
                 </td>

@@ -69,6 +69,7 @@
   margin: 0.8rem 1rem 0 1rem;
   border-radius: 8px;
   font-size: 1rem;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif !important;
   cursor: pointer;
   transition: background 0.3s ease;
 }
@@ -136,6 +137,60 @@
 .pagination button:disabled {
   background-color: #ccc;
   cursor: not-allowed;
+}
+.price-section {
+  margin: 10px 0;
+}
+
+.offer-price {
+  font-weight: bold;
+  color: #ff6600 !important;
+  font-size: 1.1rem;
+}
+
+.original-price {
+  text-decoration: line-through;
+  color: #888 !important;
+  margin-top: 4px;
+  font-size: 0.9rem;
+}
+
+.discount-badge {
+  color: green !important;
+  font-size: 0.85rem;
+  margin-top: 3px;
+}
+
+.normal-price {
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+.stock-status {
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-top: 5px;
+}
+
+.in-stock {
+  color: green !important;
+}
+
+.out-of-stock {
+  color: red !important;
+}
+
+.disabled-btn {
+  background-color: #ccc !important;
+  color: #666 !important;
+  cursor: not-allowed;
+  pointer-events: none;
+  border: none;
+}
+.low-stock-badge {
+  color: #d9534f !important;
+  font-weight: bold;
+  margin-top: 4px;
+  font-size: 14px;
 }
 
 @keyframes spin {
