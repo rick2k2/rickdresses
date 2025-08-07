@@ -19,7 +19,7 @@ import Shipping from "./pages/Shipping";
 import Contact from "./pages/Contact";
 import OrderSuccess from "./pages/OrderSuccess";
 import PageNotFound from "./pages/PageNotFound";
-import UnderConstruction from "./pages/UnderConstruction";
+// import UnderConstruction from "./pages/UnderConstruction";
 import Profile from "./pages/Profile.jsx";
 import IdlePopup from "./pages/IdlePopup";
 import OrderHistory from "./pages/OrderHistory";
@@ -27,6 +27,7 @@ import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
 import PaymentQr from "./pages/PaymentQr";
 import PaymentSuccess from "./pages/PaymentSuccess";
+import ProductReviewForm from "./pages/ProductReviewForm.jsx";
 
 // admin import
 import AdminDashboard from "./admin/AdminDashboard";
@@ -53,6 +54,7 @@ import AdminAllBill from "./admin/AdminAllBill";
 import AdminDueBill from "./admin/AdminDueBill";
 import AdminContact from "./admin/AdminContact";
 import AdminContactMessageCard from "./admin/AdminContactMessageCard";
+import AdminReviewTable from "./admin/AdminReviewTable";
 
 // toast related import
 import { ToastContainer } from "react-toastify";
@@ -65,7 +67,6 @@ function App() {
   const [user, setUser] = useState(null);
   const { cartItems } = useCart();
 
-  console.log(cartItems);
   useEffect(() => {
     const stored = localStorage.getItem("userInfo");
     if (stored) {
@@ -84,7 +85,8 @@ function App() {
 
   return (
     <>
-      <UnderConstruction />
+      {/* change here and uncomment if no update avaliable if update avaliable then comment here */}
+      {/* <UnderConstruction /> */}
       {loading ? (
         <LoadingScreen />
       ) : (
@@ -99,6 +101,7 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login setUser={setUser} />} />
             <Route path="/product/:id" element={<ProductDetails />} />
+            <Route path="/product/:id/review" element={<ProductReviewForm />} />
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/order-history" element={<OrderHistory />} />
             <Route path="/order-success" element={<OrderSuccess />} />
@@ -166,6 +169,7 @@ function App() {
               <Route path="users/update/:id" element={<UpdateUser />} />
               <Route path="products" element={<AdminProducts />} />
               <Route path="products/create" element={<AdminCreateProduct />} />
+              <Route path="/admin/allreviews" element={<AdminReviewTable />} />
               <Route
                 path="products/update"
                 element={<AdminUpdateProductListing />}

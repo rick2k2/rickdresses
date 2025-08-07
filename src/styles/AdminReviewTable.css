@@ -1,0 +1,42 @@
+.admin-review-table-container {
+  padding: 20px;
+  max-width: 1000px;
+  margin: auto;
+}
+
+.admin-review-table-container h2 {
+  text-align: center;
+}
+
+.admin-review-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.admin-review-table th,
+.admin-review-table td {
+  padding: 12px;
+  border: 1px solid #ddd;
+  text-align: center;
+}
+
+.profile-image {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.delete-btn {
+  background-color: #e74c3c;
+  border: none;
+  color: white;
+  padding: 6px 12px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.delete-btn:hover {
+  background-color: #c0392b;
+}

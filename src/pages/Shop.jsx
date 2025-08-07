@@ -101,7 +101,7 @@ const Shop = () => {
         id: product._id,
         name: product.name,
         price: product.price,
-        image: product.image,
+        image: product.image.url,
       });
 
       toast.success("🛒 Product added to cart!");
@@ -164,7 +164,7 @@ const Shop = () => {
 
                 return (
                   <div className="product-card" key={p._id}>
-                    <img src={p.image} alt={p.name} />
+                    <img src={p.image.url} alt={p.name} />
                     <h3>{p.name}</h3>
 
                     <div className="price-section">

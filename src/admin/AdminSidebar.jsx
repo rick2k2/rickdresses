@@ -31,6 +31,9 @@ const AdminSidebar = () => {
         <li>
           <Link to="/admin/allcontacts">Contact Message</Link>
         </li>
+        <li>
+          <Link to="/admin/allreviews">Reviews</Link>
+        </li>
       </ul>
     </div>
   );

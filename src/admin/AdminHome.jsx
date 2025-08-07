@@ -12,6 +12,7 @@ const AdminHome = () => {
     totalBills: 0,
     totalPayments: 0,
     totalContacts: 0,
+    totalReviews: 0,
   });
   const [loading, setLoading] = useState(true);
 
@@ -81,6 +82,12 @@ const AdminHome = () => {
             <div className="stat-card">
               <h3>Total Contact</h3>
               <p>{stats.totalContacts}</p>
+            </div>
+          </Link>
+          <Link to="/admin/allreviews" className="admin_home_link">
+            <div className="stat-card">
+              <h3>Total Reviews</h3>
+              <p>{stats.totalReviews}</p>
             </div>
           </Link>
         </div>

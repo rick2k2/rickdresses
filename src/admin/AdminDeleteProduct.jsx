@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "../utils/axiosConfig";
-import "../styles/AdminProducts.css";
+import "../styles/AdminDeleteProducts.css";
 import { toast } from "react-toastify";
 
 const DeleteProduct = () => {
@@ -32,18 +32,18 @@ const DeleteProduct = () => {
   }, []);
 
   return (
-    <div className="admin-page">
+    <div className="dadmin-page">
       <h2>Delete Product</h2>
-      <div className="product-list">
+      <div className="dproduct-list">
         {products.map((prod) => (
-          <div key={prod._id} className="product-card">
-            <img src={prod.image} alt={prod.name} />
+          <div key={prod._id} className="dproduct-card">
+            <img src={prod.image.url} alt={prod.name} />
             <div>
               <h4>{prod.name}</h4>
               <p>₹{prod.price}</p>
               <button
                 onClick={() => handleDelete(prod._id)}
-                className="delete-btn"
+                className="delete_btn_admin_product_delete"
               >
                 Delete
               </button>

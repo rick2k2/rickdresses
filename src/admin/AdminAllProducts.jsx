@@ -71,7 +71,7 @@ const AdminAllProducts = () => {
               <tr key={product._id}>
                 <td>
                   <img
-                    src={product.image}
+                    src={product.image.url}
                     alt={product.name}
                     className="admin-product-img"
                     onError={(e) =>

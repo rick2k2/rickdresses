@@ -28,7 +28,7 @@ const UpdateProduct = () => {
         {products.map((prod) => (
           <div key={prod._id} className="uproduct-card">
             <img
-              src={prod.image || "/assets/no-image.png"}
+              src={prod.image.url || "/assets/no-image.png"}
               alt={prod.name}
               className="uproduct-image"
             />
