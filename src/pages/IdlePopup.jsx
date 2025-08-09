@@ -3,7 +3,7 @@ import "../styles/IdlePopup.css"; // Style file
 
 const IdlePopup = () => {
   const [showPopup, setShowPopup] = useState(false);
-  const idleTime = 3000; // 2 seconds
+  const idleTime = 60000;
 
   useEffect(() => {
     let timer;

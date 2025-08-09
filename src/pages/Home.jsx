@@ -7,7 +7,7 @@ import Brands from "../components/Brands";
 import Shop from "../pages/Shop";
 import CustomerReviews from "../pages/CustomerReviews.jsx";
 import { useEffect, useState } from "react";
-import { FaArrowUp } from "react-icons/fa"; //
+import { FaArrowUp } from "react-icons/fa";
 import "../styles/Home.css";
 
 const Home = () => {

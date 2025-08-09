@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import { useCart } from "../context/CartContext";
 import "../styles/shop.css";
 
-const Shop = () => {
+const Shop = ({ initialSearch = "" }) => {
   const location = useLocation();
   const isHome = location.pathname === "/";
   const { addToCart } = useCart();
@@ -13,7 +13,7 @@ const Shop = () => {
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState(initialSearch);
   const [category, setCategory] = useState("All");
   const [sortOrder, setSortOrder] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -85,10 +85,8 @@ const Shop = () => {
     }
 
     try {
-      // Reduce stock from backend
       const res = await axios.patch(`/products/reduce-stock/${product._id}`);
 
-      // Update the local state for product
       const updatedProducts = products.map((p) =>
         p._id === product._id
           ? { ...p, countInStock: res.data.countInStock }
@@ -96,7 +94,6 @@ const Shop = () => {
       );
       setProducts(updatedProducts);
 
-      // Add to cart
       addToCart({
         id: product._id,
         name: product.name,
@@ -113,18 +110,19 @@ const Shop = () => {
 
   return (
     <div className="shop-section">
-      <h2>Rick Dresses Shop</h2>
+      <h2>{isHome ? "Featured Products" : "Rick Dresses Shop"}</h2>
 
-      <div className="shop-layout">
+      {/* Search & Filters always visible */}
+      <div className="filters">
+        <input
+          type="text"
+          placeholder="Search by name..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+
         {!isHome && (
-          <div className="filters">
-            <input
-              type="text"
-              placeholder="Search by name..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-
+          <>
             <select
               value={category}
               onChange={(e) => setCategory(e.target.value)}
@@ -144,101 +142,99 @@ const Shop = () => {
               <option value="lowToHigh">Price: Low to High</option>
               <option value="highToLow">Price: High to Low</option>
             </select>
+          </>
+        )}
+      </div>
+
+      <div className="product-area">
+        {loading ? (
+          <div className="loader-container">
+            <div className="loader"></div>
+            <p>Loading products...</p>
+          </div>
+        ) : (
+          <div className="product-grid">
+            {paginatedProducts.map((p) => {
+              const lowStock = p.countInStock > 0 && p.countInStock <= 3;
+              const offerPrice = (
+                p.price -
+                (p.price * p.discountPercent) / 100
+              ).toFixed(2);
+
+              return (
+                <div className="product-card" key={p._id}>
+                  <img src={p.image.url} alt={p.name} />
+                  <h3>{p.name}</h3>
+
+                  <div className="price-section">
+                    {p.discountPercent ? (
+                      <>
+                        <p className="offer-price">₹{offerPrice}</p>
+                        <p className="original-price">₹{p.price.toFixed(2)}</p>
+                        <p className="discount-badge">
+                          Save {p.discountPercent}%
+                        </p>
+                      </>
+                    ) : (
+                      <p className="normal-price">₹{p.price.toFixed(2)}</p>
+                    )}
+                  </div>
+
+                  <p
+                    className={
+                      p.countInStock > 0
+                        ? "stock-status in-stock"
+                        : "stock-status out-of-stock"
+                    }
+                  >
+                    {p.countInStock > 0 ? "In Stock" : "Out of Stock"}
+                  </p>
+
+                  {lowStock && (
+                    <p className="low-stock-badge">
+                      🔥 Only {p.countInStock} left!
+                    </p>
+                  )}
+
+                  <div className="product-buttons">
+                    <Link to={`/product/${p._id}`}>
+                      <button>View Details</button>
+                    </Link>
+                    <button
+                      onClick={() => handleAddToCart(p)}
+                      disabled={p.countInStock === 0}
+                      className={p.countInStock === 0 ? "disabled-btn" : ""}
+                    >
+                      {p.countInStock === 0 ? "Out of Stock" : "Add to Cart"}
+                    </button>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         )}
 
-        <div className="product-area">
-          {loading ? (
-            <div className="loader-container">
-              <div className="loader"></div>
-              <p>Loading products...</p>
-            </div>
-          ) : (
-            <div className="product-grid">
-              {paginatedProducts.map((p) => {
-                const lowStock = p.countInStock > 0 && p.countInStock <= 3;
-                const offerPrice = (
-                  p.price -
-                  (p.price * p.discountPercent) / 100
-                ).toFixed(2);
-
-                return (
-                  <div className="product-card" key={p._id}>
-                    <img src={p.image.url} alt={p.name} />
-                    <h3>{p.name}</h3>
-
-                    <div className="price-section">
-                      {p.discountPercent ? (
-                        <>
-                          <p className="offer-price">₹{offerPrice}</p>
-                          <p className="original-price">
-                            ₹{p.price.toFixed(2)}
-                          </p>
-                          <p className="discount-badge">
-                            Save {p.discountPercent}%
-                          </p>
-                        </>
-                      ) : (
-                        <p className="normal-price">₹{p.price.toFixed(2)}</p>
-                      )}
-                    </div>
-
-                    <p
-                      className={
-                        p.countInStock > 0
-                          ? "stock-status in-stock"
-                          : "stock-status out-of-stock"
-                      }
-                    >
-                      {p.countInStock > 0 ? "In Stock" : "Out of Stock"}
-                    </p>
-
-                    {lowStock && (
-                      <p className="low-stock-badge">
-                        🔥 Only {p.countInStock} left!
-                      </p>
-                    )}
-
-                    <div className="product-buttons">
-                      <Link to={`/product/${p._id}`}>
-                        <button>View Details</button>
-                      </Link>
-                      <button
-                        onClick={() => handleAddToCart(p)}
-                        disabled={p.countInStock === 0}
-                        className={p.countInStock === 0 ? "disabled-btn" : ""}
-                      >
-                        {p.countInStock === 0 ? "Out of Stock" : "Add to Cart"}
-                      </button>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          )}
-
-          {!isHome && totalPages > 1 && (
-            <div className="pagination">
-              <button
-                onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-                disabled={currentPage === 1}
-              >
-                Prev
-              </button>
-              <span>
-                {currentPage} / {totalPages}
-              </span>
-              <button
-                onClick={() =>
-                  setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-                }
-                disabled={currentPage === totalPages}
-              >
-                Next
-              </button>
-            </div>
-          )}
-        </div>
+        {!isHome && totalPages > 1 && (
+          <div className="pagination">
+            <button
+              onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+              disabled={currentPage === 1}
+            >
+              Prev
+            </button>
+            <span>
+              {currentPage} / {totalPages}
+            </span>
+            <button
+              onClick={() =>
+                setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+              }
+              disabled={currentPage === totalPages}
+            >
+              Next
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
