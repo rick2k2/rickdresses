@@ -21,7 +21,7 @@ const Shop = ({ initialSearch = "" }) => {
 
   const PRODUCTS_PER_PAGE = isHome ? 8 : 20;
 
-  // fetch the products
+  // Fetch products
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -38,7 +38,7 @@ const Shop = ({ initialSearch = "" }) => {
     fetchProducts();
   }, []);
 
-  // sort ,filter search and pagination
+  // Sort, filter, search, and pagination
   useEffect(() => {
     let filtered = [...products];
 
@@ -77,7 +77,7 @@ const Shop = ({ initialSearch = "" }) => {
     startIdx + PRODUCTS_PER_PAGE
   );
 
-  // add to cart function
+  // Add to cart function
   const handleAddToCart = async (product) => {
     if (product.countInStock === 0) {
       toast.error("❌ This item is out of stock!");
@@ -112,38 +112,40 @@ const Shop = ({ initialSearch = "" }) => {
     <div className="shop-section">
       <h2>{isHome ? "Featured Products" : "Rick Dresses Shop"}</h2>
 
-      {/* Search & Filters always visible */}
+      {/* ✅ Filters Section - Modern UI */}
       <div className="filters">
+        {/* Search Input */}
         <input
           type="text"
-          placeholder="Search by name..."
+          placeholder="🔍 Search products..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
+          className="search-input"
         />
 
-        {!isHome && (
-          <>
-            <select
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
-            >
-              {categories.map((cat, idx) => (
-                <option key={idx} value={cat}>
-                  {cat}
-                </option>
-              ))}
-            </select>
+        {/* Category Filter */}
+        <select
+          value={category}
+          onChange={(e) => setCategory(e.target.value)}
+          className="filter-select"
+        >
+          {categories.map((cat, idx) => (
+            <option key={idx} value={cat}>
+              {cat}
+            </option>
+          ))}
+        </select>
 
-            <select
-              value={sortOrder}
-              onChange={(e) => setSortOrder(e.target.value)}
-            >
-              <option value="">Sort</option>
-              <option value="lowToHigh">Price: Low to High</option>
-              <option value="highToLow">Price: High to Low</option>
-            </select>
-          </>
-        )}
+        {/* Price Sorting */}
+        <select
+          value={sortOrder}
+          onChange={(e) => setSortOrder(e.target.value)}
+          className="filter-select"
+        >
+          <option value="">Sort by Price</option>
+          <option value="lowToHigh">Price: Low → High</option>
+          <option value="highToLow">Price: High → Low</option>
+        </select>
       </div>
 
       <div className="product-area">
