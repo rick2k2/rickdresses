@@ -7,7 +7,7 @@ const Cart = () => {
   const { cartItems, updateQuantity, removeFromCart, clearCart } = useCart();
 
   const totalPrice = cartItems.reduce(
-    (acc, item) => acc + item.price * item.quantity,
+    (acc, item) => acc + item.finalPrice * item.quantity,
     0
   );
 
@@ -17,7 +17,7 @@ const Cart = () => {
 
       {cartItems.length === 0 ? (
         <div className="empty-cart">
-          <p>Your cart is empty. Now start your Shopping.</p>
+          <p>Your cart is empty. Start shopping now!</p>
           <Link to="/shop">
             <button className="visit-shop-btn">Visit Shop</button>
           </Link>
@@ -25,28 +25,33 @@ const Cart = () => {
       ) : (
         <div className="cart-container">
           {cartItems.map((item) => (
-            <div className="cart-item" key={item._id || item.id}>
-              <img
-                src={item.image || "/images/no-image.png"}
-                alt={item.name || "Product"}
-              />
+            <div className="cart-item" key={item.id}>
+              <img src={item.image || "/images/no-image.png"} alt={item.name} />
               <div className="item-details">
                 <h3>{item.name}</h3>
-                <p>Price: ₹{item.price}</p>
+                <p>
+                  Price:{" "}
+                  {item.offerPrice ? (
+                    <>
+                      <span className="cart-offer-price">
+                        ₹{item.finalPrice}
+                      </span>{" "}
+                      <span className="cart-original-price">₹{item.price}</span>
+                    </>
+                  ) : (
+                    <span>₹{item.price}</span>
+                  )}
+                </p>
                 <label>
                   Quantity:{" "}
                   <select
                     value={item.quantity}
                     onChange={(e) =>
-                      updateQuantity(
-                        item._id || item.id,
-                        Number(e.target.value)
-                      )
+                      updateQuantity(item.id, Number(e.target.value))
                     }
-                    className="quantity-select"
                   >
                     {Array.from(
-                      { length: Math.max(item.quantity, 10) },
+                      { length: item.quantity + item.countInStock },
                       (_, i) => i + 1
                     ).map((q) => (
                       <option key={q} value={q}>
@@ -58,7 +63,7 @@ const Cart = () => {
               </div>
               <button
                 className="cart_remove_btn"
-                onClick={() => removeFromCart(item._id || item.id)}
+                onClick={() => removeFromCart(item.id)}
               >
                 Remove
               </button>
@@ -67,19 +72,17 @@ const Cart = () => {
 
           <div className="cart-summary">
             <h3>Total: ₹{totalPrice.toFixed(2)}</h3>
-            <Link to="/shop" className="cart_btn_link">
+            <Link to="/shop">
               <button className="buymore-btn">Buy More</button>
             </Link>
-            <Link to="/checkout" className="cart_btn_link">
+            <Link to="/checkout">
               <button className="checkout-btn">Proceed to Checkout</button>
             </Link>
             <button
               className="clear_cart_btn"
               onClick={() => {
-                const confirmClear = window.confirm(
-                  "Are you sure you want to remove all items?"
-                );
-                if (confirmClear) clearCart();
+                if (window.confirm("Are you sure to remove all items?"))
+                  clearCart();
               }}
             >
               Clear All Items

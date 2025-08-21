@@ -8,7 +8,7 @@ import "../styles/shop.css";
 const Shop = ({ initialSearch = "" }) => {
   const location = useLocation();
   const isHome = location.pathname === "/";
-  const { addToCart } = useCart();
+  const { cartItems, addToCart } = useCart();
 
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
@@ -34,30 +34,40 @@ const Shop = ({ initialSearch = "" }) => {
         setLoading(false);
       }
     };
-
     fetchProducts();
   }, []);
 
-  // Sort, filter, search, and pagination
+  // Sync shop stock with cart
+  useEffect(() => {
+    if (cartItems.length > 0) {
+      setProducts((prev) =>
+        prev.map((p) => {
+          const cartItem = cartItems.find((c) => c.id === p._id);
+          if (cartItem) {
+            return {
+              ...p,
+              countInStock: Math.max(p.countInStock - cartItem.quantity, 0),
+            };
+          }
+          return p;
+        })
+      );
+    }
+  }, [cartItems]);
+
+  // Sort, filter, search, pagination
   useEffect(() => {
     let filtered = [...products];
-
     if (searchTerm.trim() !== "") {
       filtered = filtered.filter((p) =>
         p.name?.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
-
-    if (category !== "All") {
+    if (category !== "All")
       filtered = filtered.filter((p) => p.category === category);
-    }
-
-    if (sortOrder === "lowToHigh") {
-      filtered.sort((a, b) => a.price - b.price);
-    } else if (sortOrder === "highToLow") {
+    if (sortOrder === "lowToHigh") filtered.sort((a, b) => a.price - b.price);
+    else if (sortOrder === "highToLow")
       filtered.sort((a, b) => b.price - a.price);
-    }
-
     setFilteredProducts(filtered);
     setCurrentPage(1);
   }, [searchTerm, category, sortOrder, products]);
@@ -77,7 +87,7 @@ const Shop = ({ initialSearch = "" }) => {
     startIdx + PRODUCTS_PER_PAGE
   );
 
-  // Add to cart function
+  // Add to cart
   const handleAddToCart = async (product) => {
     if (product.countInStock === 0) {
       toast.error("❌ This item is out of stock!");
@@ -85,20 +95,34 @@ const Shop = ({ initialSearch = "" }) => {
     }
 
     try {
+      // Reduce stock in backend
       const res = await axios.patch(`/products/reduce-stock/${product._id}`);
+      const updatedStock = res.data.countInStock;
 
-      const updatedProducts = products.map((p) =>
-        p._id === product._id
-          ? { ...p, countInStock: res.data.countInStock }
-          : p
+      // Update shop products locally
+      setProducts((prev) =>
+        prev.map((p) =>
+          p._id === product._id ? { ...p, countInStock: updatedStock } : p
+        )
       );
-      setProducts(updatedProducts);
 
+      // Calculate final price
+      const finalPrice = product.discountPercent
+        ? (
+            product.price -
+            (product.price * product.discountPercent) / 100
+          ).toFixed(2)
+        : product.price;
+
+      // Add to cart
       addToCart({
         id: product._id,
         name: product.name,
         price: product.price,
+        offerPrice: product.discountPercent ? finalPrice : null,
+        finalPrice: finalPrice,
         image: product.image.url,
+        countInStock: updatedStock,
       });
 
       toast.success("🛒 Product added to cart!");
@@ -112,9 +136,7 @@ const Shop = ({ initialSearch = "" }) => {
     <div className="shop-section">
       <h2>{isHome ? "Featured Products" : "Rick Dresses Shop"}</h2>
 
-      {/* ✅ Filters Section - Modern UI */}
       <div className="filters">
-        {/* Search Input */}
         <input
           type="text"
           placeholder="🔍 Search products..."
@@ -122,8 +144,6 @@ const Shop = ({ initialSearch = "" }) => {
           onChange={(e) => setSearchTerm(e.target.value)}
           className="search-input"
         />
-
-        {/* Category Filter */}
         <select
           value={category}
           onChange={(e) => setCategory(e.target.value)}
@@ -135,8 +155,6 @@ const Shop = ({ initialSearch = "" }) => {
             </option>
           ))}
         </select>
-
-        {/* Price Sorting */}
         <select
           value={sortOrder}
           onChange={(e) => setSortOrder(e.target.value)}
@@ -167,7 +185,6 @@ const Shop = ({ initialSearch = "" }) => {
                 <div className="product-card" key={p._id}>
                   <img src={p.image.url} alt={p.name} />
                   <h3>{p.name}</h3>
-
                   <div className="price-section">
                     {p.discountPercent ? (
                       <>

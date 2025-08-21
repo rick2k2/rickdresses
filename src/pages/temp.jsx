@@ -1,199 +1,198 @@
-// import React, { useEffect, useState } from "react";
-// import { useParams, useNavigate } from "react-router-dom";
-// import Tesseract from "tesseract.js";
-// import axios from "../utils/axiosConfig";
-// import "../styles/PaymentQr.css";
+// cartcontext.jsx
+
+// import React, { createContext, useContext, useEffect, useState } from "react";
 // import { toast } from "react-toastify";
-// const token = localStorage.getItem("token");
+// import axios from "../utils/axiosConfig";
+// const CartContext = createContext();
+// export const useCart = () => useContext(CartContext);
 
-// const PaymentQr = () => {
-//   const { id } = useParams();
-//   const navigate = useNavigate();
-//   const [order, setOrder] = useState(null);
-//   const [transactionId, setTransactionId] = useState("");
-//   const [image, setImage] = useState(null);
-//   const [paymentAmount, setPaymentAmount] = useState("");
-//   const [loading, setLoading] = useState(false);
-//   const [status, setStatus] = useState("");
-//   const [error, setError] = useState("");
-//   const [loadingOrder, setLoadingOrder] = useState(true);
+// export const CartProvider = ({ children }) => {
+//   const [cartItems, setCartItems] = useState(() => {
+//     const stored = localStorage.getItem("rick-cart");
+//     return stored ? JSON.parse(stored) : [];
+//   });
 
+//   const [checkoutData, setCheckoutData] = useState(null); // ✅ form info save korar jonno
+
+//   // set item in local storage
 //   useEffect(() => {
-//     toast.success("Payment Details....");
-//     if (!id) return;
+//     localStorage.setItem("rick-cart", JSON.stringify(cartItems));
+//   }, [cartItems]);
 
-//     const fetchOrder = async () => {
-//       try {
-//         setStatus("⏳ Fetching order...");
-//         const { data } = await axios.get(`/orders/${id}`);
-//         setOrder(data);
+//   // add to cart
+//   const addToCart = (product) => {
+//     setCartItems((prev) => {
+//       const exists = prev.find((item) => item.id === product.id);
+//       if (exists) {
+//         return prev.map((item) =>
+//           item.id === product.id
+//             ? { ...item, quantity: item.quantity + 1 }
+//             : item
+//         );
+//       } else {
+//         const id = product.id || `${product.name}-${Date.now()}`;
+//         const finalPrice =
+//           product.offerPrice && product.offerPrice > 0
+//             ? product.offerPrice
+//             : product.price;
 
-//         const amount =
-//           data?.total || data?.totalPrice || data?.order?.totalPrice;
-//         setPaymentAmount(amount || "0.00");
-//         setStatus("✅ Order fetched.");
-//       } catch (err) {
-//         console.error("❌ Failed to fetch order:", err);
-//         setError("Failed to fetch order details.");
-//         setStatus("❌ Order not found or fetch error.");
-//       } finally {
-//         setLoadingOrder(false);
+//         return [...prev, { ...product, id, quantity: 1, finalPrice }];
 //       }
-//     };
-
-//     fetchOrder();
-//   }, [id]);
-
-//   // handle image upload
-//   const handleImageUpload = (e) => {
-//     const file = e.target.files[0];
-//     if (!file) return;
-
-//     setImage(file);
-//     setLoading(true);
-//     setStatus("🔍 Detecting Transaction ID...");
-
-//     Tesseract.recognize(file, "eng", {
-//       logger: (m) => console.log(m),
-//     })
-//       .then(({ data: { text } }) => {
-//         console.log("📝 OCR Text:", text);
-
-//         // Match UPI ID or txn ID formats
-//         const match = text.match(/\b[0-9a-zA-Z]{10,}\b/);
-//         if (match) {
-//           setTransactionId(match[0]);
-//           setStatus("✅ Transaction ID detected!");
-//         } else {
-//           setTransactionId("");
-//           setStatus("⚠️ Couldn't detect ID. Please enter manually.");
-//         }
-//       })
-//       .catch((err) => {
-//         console.error("OCR Error:", err);
-//         setTransactionId("");
-//         setStatus("❌ OCR failed. Try again.");
-//       })
-//       .finally(() => {
-//         setLoading(false);
-//       });
+//     });
 //   };
 
-//   // handle submit
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-//     if (!transactionId || !image || !paymentAmount) {
-//       return alert("All fields are required!");
-//     }
-
-//     const formData = new FormData();
-//     formData.append("screenshot", image);
-//     formData.append("transactionId", transactionId);
-//     formData.append("paymentAmount", paymentAmount);
-//     formData.append("orderId", id);
-
+//   // remove from cart
+//   const removeFromCart = async (id) => {
 //     try {
-//       setStatus("⏳ Submitting...");
-//       const res = await axios.post("/payments/verify", formData, {
-//         headers: {
-//           Authorization: `Bearer ${token}`,
-//           "Content-Type": "multipart/form-data",
-//         },
-//       });
-
-//       if (res.status === 201) {
-//         setStatus("✅ Payment submitted! Admin will verify soon.");
-//         navigate("/payment/success");
-//       } else {
-//         setStatus("❌ Submission failed.");
-//       }
+//       await axios.patch(`/products/increase-stock/${id}`);
+//       setCartItems((prev) => prev.filter((item) => item.id !== id));
+//       toast.success("🧺 Product removed and stock restored!");
 //     } catch (error) {
-//       if (error.response && error.response.status === 409) {
-//         setStatus("⚠️ Payment already submitted for this order.");
-//         toast.success("You’ve already submitted payment for this order.");
-//         navigate("/order-history");
-//       } else {
-//         console.error("❌ Submission error", error);
-//         setStatus("❌ Submission failed. Try again.");
-//         toast.success("Something went wrong. Try again later.");
-//       }
+//       toast.success("⚠️ Could not restore stock. Try again.");
 //     }
 //   };
 
-//   if (loadingOrder)
-//     return <div className="payment-loading">Loading payment info...</div>;
-//   if (error) return <div className="payment-error">{error}</div>;
-//   if (!order) return <div className="payment-error">No order found.</div>;
+//   // update quantity
+//   const updateQuantity = (id, quantity) => {
+//     setCartItems((prev) =>
+//       prev.map((item) =>
+//         item.id === id
+//           ? { ...item, quantity: Math.min(quantity, item.countInStock) }
+//           : item
+//       )
+//     );
+//   };
+
+//   const clearCart = () => setCartItems([]);
+
+//   const saveCheckoutData = (data) => {
+//     setCheckoutData(data); // ✅ store checkout form info
+//   };
 
 //   return (
-//     <div className="payment_page_container">
-//       <div className="payment-container">
-//         <h2>💳 Make Payment to Rick Dresses</h2>
-//         <p>
-//           Scan the QR code below using any UPI app to complete your payment.
-//         </p>
+//     <CartContext.Provider
+//       value={{
+//         cartItems,
+//         addToCart,
+//         removeFromCart,
+//         updateQuantity,
+//         clearCart,
+//         checkoutData,
+//         saveCheckoutData,
+//       }}
+//     >
+//       {children}
+//     </CartContext.Provider>
+//   );
+// };
 
-//         <h5 className="order_id_payment">🆔 Order ID: {id?.slice(-6)}</h5>
-//         <h3 className="amount_display_payment">🧾 Amount: ₹{paymentAmount}</h3>
+// Cart.js
+// import React from "react";
+// import { Link } from "react-router-dom";
+// import { useCart } from "../context/CartContext";
+// import "../styles/cart.css";
 
-//         <div className="qr-section">
-//           <img
-//             src="/assests/GpayQr.jpg"
-//             alt="Rick Dresses UPI QR"
-//             className="qr-image"
-//           />
-//           <div className="upi-id">
-//             <strong>UPI ID:</strong> rickdresses@okicici
+// const Cart = () => {
+//   const { cartItems, updateQuantity, removeFromCart, clearCart } = useCart();
+
+//   const totalPrice = cartItems.reduce(
+//     (acc, item) => acc + item.finalPrice * item.quantity,
+//     0
+//   );
+
+//   return (
+//     <div className="cart-page">
+//       <h2>Your Cart 🛒</h2>
+
+//       {cartItems.length === 0 ? (
+//         <div className="empty-cart">
+//           <p>Your cart is empty. Now start your Shopping.</p>
+//           <Link to="/shop">
+//             <button className="visit-shop-btn">Visit Shop</button>
+//           </Link>
+//         </div>
+//       ) : (
+//         <div className="cart-container">
+//           {cartItems.map((item) => (
+//             <div className="cart-item" key={item._id || item.id}>
+//               <img
+//                 src={item.image || "/images/no-image.png"}
+//                 alt={item.name || "Product"}
+//               />
+//               <div className="item-details">
+//                 <h3>{item.name}</h3>
+//                 <p>
+//                   {" "}
+//                   Price:
+//                   {item.offerPrice ? (
+//                     <>
+//                       <span className="cart-offer-price">
+//                         ₹{Number(item.finalPrice).toFixed(2)}
+//                       </span>{" "}
+//                       <span className="cart-original-price">
+//                         ₹{Number(item.price).toFixed(2)}
+//                       </span>
+//                     </>
+//                   ) : (
+//                     <span>₹{Number(item.price).toFixed(2)}</span>
+//                   )}
+//                 </p>
+//                 <label>
+//                   Quantity:{" "}
+//                   <select
+//                     value={item.quantity}
+//                     onChange={(e) =>
+//                       updateQuantity(
+//                         item._id || item.id,
+//                         Number(e.target.value)
+//                       )
+//                     }
+//                     className="quantity-select"
+//                   >
+//                     {Array.from(
+//                       { length: item.countInStock }, // stock er moto limit
+//                       (_, i) => i + 1
+//                     ).map((q) => (
+//                       <option key={q} value={q}>
+//                         {q}
+//                       </option>
+//                     ))}
+//                   </select>
+//                 </label>
+//               </div>
+//               <button
+//                 className="cart_remove_btn"
+//                 onClick={() => removeFromCart(item._id || item.id)}
+//               >
+//                 Remove
+//               </button>
+//             </div>
+//           ))}
+
+//           <div className="cart-summary">
+//             <h3>Total: ₹{totalPrice.toFixed(2)}</h3>
+//             <Link to="/shop" className="cart_btn_link">
+//               <button className="buymore-btn">Buy More</button>
+//             </Link>
+//             <Link to="/checkout" className="cart_btn_link">
+//               <button className="checkout-btn">Proceed to Checkout</button>
+//             </Link>
+//             <button
+//               className="clear_cart_btn"
+//               onClick={() => {
+//                 const confirmClear = window.confirm(
+//                   "Are you sure you want to remove all items?"
+//                 );
+//                 if (confirmClear) clearCart();
+//               }}
+//             >
+//               Clear All Items
+//             </button>
 //           </div>
 //         </div>
-
-//         <p className="note">
-//           📌 Please mention your Order ID in the UPI note while making payment.
-//         </p>
-//       </div>
-
-//       <div className="payment_form_container">
-//         <form className="payment-form" onSubmit={handleSubmit}>
-//           <h2>📝 Verify Your Payment</h2>
-
-//           <label htmlFor="screenshot">📷 Upload Payment Screenshot:</label>
-//           <input
-//             type="file"
-//             id="screenshot"
-//             accept="image/*"
-//             onChange={handleImageUpload}
-//             required
-//           />
-
-//           <label htmlFor="transactionId">🧾 Enter Transaction ID:</label>
-//           <input
-//             type="text"
-//             id="transactionId"
-//             value={transactionId}
-//             onChange={(e) => setTransactionId(e.target.value)}
-//             placeholder="e.g., UPI12345678"
-//             required
-//           />
-
-//           <label htmlFor="paymentAmount">💰 Payment Amount (₹):</label>
-//           <input
-//             type="number"
-//             id="paymentAmount"
-//             value={paymentAmount}
-//             onChange={(e) => setPaymentAmount(e.target.value)}
-//             className="payment_amount_payment"
-//             required
-//           />
-
-//           <button type="submit" disabled={loading}>
-//             {loading ? "⏳ Detecting..." : "🔍 Verify Payment"}
-//           </button>
-
-//           <p className="note">{status}</p>
-//         </form>
-//       </div>
+//       )}
 //     </div>
 //   );
 // };
 
-// export default PaymentQr;
+// export default Cart;
