@@ -30,15 +30,40 @@ const ProductDetails = () => {
   }, [id]);
 
   // handel add to cart function
-  const handleAddToCart = () => {
+  const handleAddToCart = async () => {
+    if (!product) return;
+
+    if (product.countInStock === 0) {
+      toast.error("❌ Product is out of stock!");
+      return;
+    }
+
+    const finalPrice =
+      product.offerPrice && product.offerPrice > 0
+        ? product.offerPrice
+        : product.price;
+
     const item = {
       id: product._id,
       name: product.name,
       price: product.price,
+      offerPrice: product.offerPrice || null,
+      finalPrice,
       image: product?.image?.url || "",
+      countInStock: product.countInStock,
     };
-    addToCart(item);
-    toast.success("🛒 Product added to cart!");
+
+    try {
+      await addToCart(item);
+
+      // dynamically update local product count
+      setProduct((prev) => ({
+        ...prev,
+        countInStock: prev.countInStock - 1,
+      }));
+    } catch (error) {
+      toast.error("⚠️ Could not add to cart");
+    }
   };
 
   if (loading)
