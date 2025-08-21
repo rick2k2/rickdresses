@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import "../styles/cart.css";
@@ -18,7 +17,7 @@ const Cart = () => {
       {cartItems.length === 0 ? (
         <div className="empty-cart">
           <p>Your cart is empty. Start shopping now!</p>
-          <Link to="/shop">
+          <Link to="/shop" className="cart_btn_link">
             <button className="visit-shop-btn">Visit Shop</button>
           </Link>
         </div>
@@ -72,10 +71,10 @@ const Cart = () => {
 
           <div className="cart-summary">
             <h3>Total: ₹{totalPrice.toFixed(2)}</h3>
-            <Link to="/shop">
+            <Link to="/shop" className="cart_btn_link">
               <button className="buymore-btn">Buy More</button>
             </Link>
-            <Link to="/checkout">
+            <Link to="/checkout" className="cart_btn_link">
               <button className="checkout-btn">Proceed to Checkout</button>
             </Link>
             <button
