@@ -1,7 +1,31 @@
 import { Link } from "react-router-dom";
+import { useState } from "react";
 import "../styles/Footer.css";
 
 const Footer = () => {
+  const [email, setEmail] = useState("");
+  const [showPopup, setShowPopup] = useState(false);
+
+  const handleSubscribe = (e) => {
+    e.preventDefault();
+
+    if (!email.trim()) {
+      alert("Please enter your email!");
+      return;
+    }
+
+    // ✅ Show success popup
+    setShowPopup(true);
+
+    // ✅ Reset email field after subscription
+    setEmail("");
+
+    // ✅ Auto-close popup after 3 seconds
+    setTimeout(() => {
+      setShowPopup(false);
+    }, 3000);
+  };
+
   return (
     <footer className="footer">
       <div className="footer-container">
@@ -56,8 +80,13 @@ const Footer = () => {
         <div className="footer-column">
           <h4>Newsletter</h4>
           <p>Get the latest updates & offers in your inbox.</p>
-          <form className="newsletter-form">
-            <input type="email" placeholder="Your email" />
+          <form className="newsletter-form" onSubmit={handleSubscribe}>
+            <input
+              type="email"
+              placeholder="Your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
             <button type="submit">Subscribe</button>
           </form>
         </div>
@@ -90,6 +119,19 @@ const Footer = () => {
           &copy; {new Date().getFullYear()} Rick Dresses. All rights reserved.
         </p>
       </div>
+
+      {/* ✅ Success Popup */}
+      {showPopup && (
+        <div className="subscribe-popup">
+          <div className="popup-content">
+            <h3>🎉 Subscription Successful!</h3>
+            <p>
+              You have subscribed to our site. Latest updates will be sent to
+              your email soon.
+            </p>
+          </div>
+        </div>
+      )}
     </footer>
   );
 };
