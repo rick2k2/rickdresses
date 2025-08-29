@@ -42,9 +42,14 @@ const Checkout = () => {
       return;
     }
 
+    const updatedItems = cartItems.map((item) => ({
+      ...item,
+      price: item.finalPrice,
+    }));
+
     const orderDetails = {
       form,
-      items: cartItems,
+      items: updatedItems,
       total,
       payment: {
         method: paymentMethod,

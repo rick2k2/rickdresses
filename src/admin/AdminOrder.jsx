@@ -124,7 +124,8 @@ const AdminOrders = () => {
                   <ul>
                     {order.items.map((item, i) => (
                       <li key={i}>
-                        {item.name} × {item.quantity} – ₹{item.price}
+                        {item.name}-{item.price} × {item.quantity} = ₹
+                        {item.price * item.quantity}
                       </li>
                     ))}
                   </ul>
