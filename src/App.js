@@ -51,6 +51,7 @@ import AdminallPost from "./admin/AdminallPost";
 import AdminBillMenu from "./admin/AdminBillMenu";
 import AdminBilling from "./admin/AdminBilling";
 import AdminAllBill from "./admin/AdminAllBill";
+import UpdateAdminBill from "./admin/UpdateAdminBill";
 import AdminDueBill from "./admin/AdminDueBill";
 import AdminContact from "./admin/AdminContact";
 import AdminContactMessageCard from "./admin/AdminContactMessageCard";
@@ -163,7 +164,15 @@ function App() {
                   </AdminRoute>
                 }
               />
-
+              {/* update bill admin */}
+              <Route
+                path="update-bill/:id"
+                element={
+                  <AdminRoute>
+                    <UpdateAdminBill />
+                  </AdminRoute>
+                }
+              />
               <Route index element={<AdminHome />} />
               <Route path="users" element={<AdminUsers />} />
               <Route path="users/update/:id" element={<UpdateUser />} />

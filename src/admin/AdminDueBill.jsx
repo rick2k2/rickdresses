@@ -15,7 +15,7 @@ const AdminDueBill = () => {
 
   const fetchDueBills = async () => {
     try {
-      const res = await axios.get("/bills/due");
+      const res = await axios.get("/bills/due/bill-data");
       setDues(res.data);
     } catch (err) {
       console.error("Error fetching dues");

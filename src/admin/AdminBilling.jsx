@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "../utils/axiosConfig";
 import "../styles/AdminBilling.css";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 
 const AdminBilling = () => {
   const [customerName, setCustomerName] = useState("");
@@ -59,6 +59,7 @@ const AdminBilling = () => {
 
   return (
     <div className="admin-billing">
+      <ToastContainer position="top-right" autoClose={2000} />
       <h2>🧾 Generate Bill</h2>
       <form onSubmit={handleSubmit}>
         <input

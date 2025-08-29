@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "../utils/axiosConfig";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
@@ -8,32 +9,26 @@ import "react-toastify/dist/ReactToastify.css";
 import ganeshBase64 from "./ganeshBase64";
 
 const AdminAllBill = () => {
+  const navigate = useNavigate();
   const [bills, setBills] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    let isMounted = true;
-
-    const fetchBills = async () => {
-      try {
-        const res = await axios.get("/bills/all");
-        if (isMounted) {
-          setBills(res.data);
-          toast.success("Bills loaded successfully");
-        }
-      } catch (err) {
-        console.error("Failed to fetch bills", err);
-        if (isMounted) toast.error("Failed to fetch bills");
-      } finally {
-        if (isMounted) setLoading(false);
-      }
-    };
-
     fetchBills();
-    return () => {
-      isMounted = false;
-    };
   }, []);
+
+  const fetchBills = async () => {
+    setLoading(true);
+    try {
+      const res = await axios.get("/bills/all");
+      setBills(res.data);
+    } catch (err) {
+      console.error("Failed to fetch bills", err);
+      toast.error("Failed to fetch bills");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleDeleteBill = async (id) => {
     if (!window.confirm("Are you sure you want to delete this bill?")) return;
@@ -181,6 +176,12 @@ const AdminAllBill = () => {
                   </td>
                   <td>{new Date(bill.createdAt).toLocaleString()}</td>
                   <td className="action_buttons_container_all_bills">
+                    <button
+                      className="update_btn_all_bill"
+                      onClick={() => navigate(`/admin/update-bill/${bill._id}`)}
+                    >
+                      Update
+                    </button>
                     <button
                       className="delete_btn_all_bill"
                       onClick={() => handleDeleteBill(bill._id)}

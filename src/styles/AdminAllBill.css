@@ -109,6 +109,11 @@ td ul li {
   width: 100%;
   font-weight: bold;
 }
+.update_btn_all_bill {
+  background: rgb(8, 41, 223);
+  width: 100%;
+  font-weight: bold;
+}
 
 @keyframes spin {
   0% {

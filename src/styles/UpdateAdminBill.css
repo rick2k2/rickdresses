@@ -1,0 +1,71 @@
+.update_bill_container {
+  max-width: 700px;
+  margin: 20px auto;
+  background: #dedede8f;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+.from_heading_update {
+  text-align: center;
+}
+
+.update_bill_form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.update_bill_form label {
+  color: orangered;
+}
+.item_row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+input,
+textarea {
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  outline: none;
+  font-size: 18px;
+}
+
+.form_buttons > button {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  background: none;
+}
+
+.update_btn_up_admin {
+  height: 50px;
+  background: #28a745 !important;
+  width: 30%;
+  font-size: 18px !important;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.cancel_btn_up_admin {
+  width: 30%;
+  font-weight: bold;
+  background: #f44336 !important;
+  font-size: 18px !important;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.form_buttons {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+  gap: 10px;
+}
