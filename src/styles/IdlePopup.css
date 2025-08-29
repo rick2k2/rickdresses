@@ -12,7 +12,7 @@
 }
 
 .idle-popup-box {
-  background: white;
+  background: rgba(246, 156, 121, 0.507);
   padding: 30px;
   border-radius: 12px;
   text-align: center;
@@ -20,7 +20,12 @@
   max-width: 400px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
-
+.idle-popup-box > h3 {
+  text-align: center;
+}
+.idle-popup-box > p {
+  text-align: center;
+}
 .popup-buttons button {
   margin: 10px;
   padding: 10px 20px;

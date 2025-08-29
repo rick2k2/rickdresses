@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "../styles/IdlePopup.css"; // Style file
+import "../styles/IdlePopup.css";
 
 const IdlePopup = () => {
   const [showPopup, setShowPopup] = useState(false);
