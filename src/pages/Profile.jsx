@@ -125,7 +125,11 @@ const Profile = ({ user, setUser }) => {
             Update Profile
           </button>
 
-          <button type="button" className="update-btn" onClick={handleCancel}>
+          <button
+            type="button"
+            className="update-btn cancel_btn_profile"
+            onClick={handleCancel}
+          >
             Cancel Update
           </button>
         </form>
