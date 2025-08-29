@@ -32,9 +32,15 @@ const Profile = ({ user, setUser }) => {
     }
   };
 
+  const handleCancel = () => {
+    setForm(user); // Reset form fields to original user data
+    setImagePreview(user?.profileImage || ""); // Reset image preview
+    setSelectedFile(null); // Remove selected image if any
+    toast.info("Profile changes discarded!", { autoClose: 1500 });
+  };
+
   const handleUpdate = async (e) => {
     e.preventDefault();
-
     const formData = new FormData();
     formData.append("name", form.name);
     formData.append("email", form.email);
@@ -117,6 +123,10 @@ const Profile = ({ user, setUser }) => {
 
           <button type="submit" className="update-btn">
             Update Profile
+          </button>
+
+          <button type="button" className="update-btn" onClick={handleCancel}>
+            Cancel Update
           </button>
         </form>
       </div>

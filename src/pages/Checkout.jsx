@@ -17,7 +17,7 @@ const Checkout = () => {
   });
 
   const total = cartItems.reduce(
-    (acc, item) => acc + item.price * item.quantity,
+    (acc, item) => acc + item.finalPrice * item.quantity,
     0
   );
 
@@ -133,9 +133,10 @@ const Checkout = () => {
           {cartItems.map((item, idx) => (
             <div key={idx} className="summary-item">
               <span>
-                {item.name} × {item.quantity}
+                *{item.name} - [₹ {Math.round(item.finalPrice)} ×{" "}
+                {item.quantity}] =
               </span>
-              <span>₹{item.price * item.quantity}</span>
+              <span>₹{item.finalPrice * item.quantity}</span>
             </div>
           ))}
           <hr />

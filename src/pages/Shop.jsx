@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import axios from "../utils/axiosConfig";
 import { toast } from "react-toastify";
+import axios from "../utils/axiosConfig";
 import { useCart } from "../context/CartContext";
 import "../styles/shop.css";
 
@@ -87,7 +87,7 @@ const Shop = ({ initialSearch = "" }) => {
     startIdx + PRODUCTS_PER_PAGE
   );
 
-  // Add to cart
+  // Add to cart (fixed)
   const handleAddToCart = async (product) => {
     if (product.countInStock === 0) {
       toast.error("❌ This item is out of stock!");
@@ -95,18 +95,6 @@ const Shop = ({ initialSearch = "" }) => {
     }
 
     try {
-      // Reduce stock in backend
-      const res = await axios.patch(`/products/reduce-stock/${product._id}`);
-      const updatedStock = res.data.countInStock;
-
-      // Update shop products locally
-      setProducts((prev) =>
-        prev.map((p) =>
-          p._id === product._id ? { ...p, countInStock: updatedStock } : p
-        )
-      );
-
-      // Calculate final price
       const finalPrice = product.discountPercent
         ? (
             product.price -
@@ -114,21 +102,27 @@ const Shop = ({ initialSearch = "" }) => {
           ).toFixed(2)
         : product.price;
 
-      // Add to cart
-      addToCart({
+      await addToCart({
         id: product._id,
         name: product.name,
         price: product.price,
         offerPrice: product.discountPercent ? finalPrice : null,
         finalPrice: finalPrice,
         image: product.image.url,
-        countInStock: updatedStock,
+        countInStock: product.countInStock,
       });
 
-      toast.success("🛒 Product added to cart!");
+      // Update local shop stock immediately
+      setProducts((prev) =>
+        prev.map((p) =>
+          p._id === product._id
+            ? { ...p, countInStock: Math.max(p.countInStock - 1, 0) }
+            : p
+        )
+      );
     } catch (error) {
       console.error(error);
-      toast.error("Something went wrong while reducing stock");
+      toast.error("⚠️ Could not add to cart");
     }
   };
 

@@ -19,19 +19,7 @@ export const CartProvider = ({ children }) => {
 
   // Add to cart
   const addToCart = async (product) => {
-    if (product.countInStock === 0) {
-      toast.error("❌ Out of stock!");
-      return;
-    }
-
     try {
-      const res = await axios.patch(
-        `/products/reduce-stock/${product.id || product._id}`,
-        {
-          quantity: 1, // Always reduce 1 for single add
-        }
-      );
-
       setCartItems((prev) => {
         const exists = prev.find(
           (item) => item.id === (product.id || product._id)
@@ -42,16 +30,28 @@ export const CartProvider = ({ children }) => {
             : product.price;
 
         if (exists) {
-          return prev.map((item) =>
-            item.id === (product.id || product._id)
-              ? {
-                  ...item,
-                  quantity: item.quantity + 1,
-                  countInStock: res.data.countInStock,
-                }
-              : item
-          );
+          // Reduce stock only if quantity < countInStock
+          if (exists.quantity < product.countInStock) {
+            axios.patch(`/products/reduce-stock/${product.id || product._id}`, {
+              quantity: 1,
+            });
+            return prev.map((item) =>
+              item.id === (product.id || product._id)
+                ? {
+                    ...item,
+                    quantity: item.quantity + 1,
+                    countInStock: product.countInStock - 1,
+                  }
+                : item
+            );
+          } else {
+            toast.error("❌ Not enough stock!");
+            return prev;
+          }
         } else {
+          axios.patch(`/products/reduce-stock/${product.id || product._id}`, {
+            quantity: 1,
+          });
           const id =
             product.id || product._id || `${product.name}-${Date.now()}`;
           return [
@@ -61,7 +61,7 @@ export const CartProvider = ({ children }) => {
               id,
               quantity: 1,
               finalPrice,
-              countInStock: res.data.countInStock,
+              countInStock: product.countInStock - 1,
             },
           ];
         }
@@ -128,14 +128,16 @@ export const CartProvider = ({ children }) => {
     }
   };
 
+  // clear all cart items
   const clearCart = async () => {
     try {
-      // Restore all stock before clearing
-      for (let item of cartItems) {
-        await axios.patch(`/products/increase-stock/${item.id}`, {
-          quantity: item.quantity,
-        });
-      }
+      await Promise.all(
+        cartItems.map((item) =>
+          axios.patch(`/products/increase-stock/${item.id}`, {
+            quantity: item.quantity,
+          })
+        )
+      );
       setCartItems([]);
       toast.success("🧺 Cart cleared and stock restored!");
     } catch (error) {
