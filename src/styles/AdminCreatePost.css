@@ -1,39 +1,123 @@
-.admin-create-post-form {
-  padding: 40px;
-  max-width: 700px;
-  margin: auto;
-  background: #ff6600;
-  border-radius: 50px;
+/* 🌟 Container Styling */
+.admin-create-post-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-height: calc(100vh - 80px);
+  background: #f8f9fa;
+  padding: 20px;
 }
-.admin_post_heading {
-  color: #ddd;
-  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+
+/* 🌟 Card */
+.admin-create-post-card {
+  background: #fff;
+  width: 100%;
+  max-width: 550px;
+  padding: 30px 25px;
+  border-radius: 12px;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease-in-out;
 }
-.admin_post_create_form {
+
+.admin-create-post-card:hover {
+  transform: translateY(-3px);
+}
+
+/* 🌟 Heading */
+.admin-post-heading {
+  font-size: 24px;
+  font-weight: bold;
+  color: #ff6b00;
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.admin-subtitle {
+  font-size: 14px;
+  text-align: center;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+/* 🌟 Form */
+.admin-post-form {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 18px;
 }
 
-.admin_post_create_form input,
-.admin_post_create_form textarea {
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+/* Input + Textarea */
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 6px;
+  font-weight: 500;
+}
+
+.admin-post-form input,
+.admin-post-form textarea {
+  padding: 12px 14px;
+  font-size: 15px;
+  border: 1.5px solid #ddd;
+  border-radius: 8px;
   outline: none;
-}
-.admin_post_create_form input:focus,
-.admin_post_create_form textarea:focus {
-  border-color: #05be0e;
-  box-shadow: 0 0 5px rgba(5, 190, 14, 0.5);
+  transition: 0.3s;
+  background-color: #fafafa;
 }
 
-.admin_post_create_form button {
-  background: #05be0e;
-  color: white;
+.admin-post-form input:focus,
+.admin-post-form textarea:focus {
+  border-color: #ff6b00;
+  background-color: #fff;
+  box-shadow: 0 0 8px rgba(255, 107, 0, 0.2);
+}
+
+/* 🌟 Submit Button */
+.admin-post-form button {
+  background-color: #ff6b00;
+  color: #fff;
+  padding: 12px;
   border: none;
-  padding: 10px;
-  border-radius: 6px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
   cursor: pointer;
+  transition: 0.3s;
+}
+
+.admin-post-form button:hover {
+  background-color: #e65c00;
+}
+
+.admin-post-form button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+/* 🌟 Responsive */
+@media screen and (max-width: 600px) {
+  .admin-create-post-card {
+    padding: 20px 15px;
+  }
+
+  .admin-post-heading {
+    font-size: 20px;
+  }
+
+  .admin-post-form input,
+  .admin-post-form textarea {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .admin-post-form button {
+    font-size: 15px;
+    padding: 10px;
+  }
 }

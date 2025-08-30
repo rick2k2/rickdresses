@@ -135,20 +135,34 @@ const Checkout = () => {
 
         <div className="checkout-summary">
           <h3>🧾 Order Summary</h3>
-          {cartItems.map((item, idx) => (
-            <div key={idx} className="summary-item">
-              <span>
-                *{item.name} - [₹ {Math.round(item.finalPrice)} ×{" "}
-                {item.quantity}] =
-              </span>
-              <span>₹{item.finalPrice * item.quantity}</span>
-            </div>
-          ))}
-          <hr />
-          <div className="summary-total">
-            <strong>Total:</strong>
-            <strong>₹{total}</strong>
-          </div>
+          <table className="summary-table">
+            <thead>
+              <tr>
+                <th>Product</th>
+                <th>Qty</th>
+                <th>Price</th>
+                <th>Subtotal</th>
+              </tr>
+            </thead>
+            <tbody>
+              {cartItems.map((item, idx) => (
+                <tr key={idx}>
+                  <td>{item.name}</td>
+                  <td>{item.quantity}</td>
+                  <td>₹{Math.round(item.finalPrice)}</td>
+                  <td>₹{(item.finalPrice * item.quantity).toFixed(2)}</td>
+                </tr>
+              ))}
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colSpan="3" className="total-label">
+                  Total:
+                </td>
+                <td className="total-amount">₹{total.toFixed(2)}</td>
+              </tr>
+            </tfoot>
+          </table>
         </div>
       </div>
     </div>
