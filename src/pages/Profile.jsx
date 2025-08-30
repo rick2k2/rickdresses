@@ -1,14 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { FaPencilAlt } from "react-icons/fa";
+import Cropper from "react-easy-crop";
+import Slider from "@mui/material/Slider";
 import axios from "../utils/axiosConfig";
-import "react-toastify/dist/ReactToastify.css";
 import "../styles/Profile.css";
 
 const Profile = ({ user, setUser }) => {
   const [form, setForm] = useState(user || {});
   const [imagePreview, setImagePreview] = useState(user?.profileImage || "");
   const [selectedFile, setSelectedFile] = useState(null);
+  const [cropping, setCropping] = useState(false);
+  const [crop, setCrop] = useState({ x: 0, y: 0 });
+  const [zoom, setZoom] = useState(1);
+  const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
 
   useEffect(() => {
     if (form.profileImage) {
@@ -24,18 +29,50 @@ const Profile = ({ user, setUser }) => {
     const file = e.target.files[0];
     if (file) {
       setSelectedFile(file);
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImagePreview(reader.result);
-      };
-      reader.readAsDataURL(file);
+      setImagePreview(URL.createObjectURL(file));
+      setCropping(true);
     }
   };
 
+  const getCroppedImage = async () => {
+    const image = new Image();
+    image.src = imagePreview;
+    await new Promise((resolve) => (image.onload = resolve));
+
+    const canvas = document.createElement("canvas");
+    const ctx = canvas.getContext("2d");
+    const { width, height, x, y } = croppedAreaPixels;
+
+    canvas.width = width;
+    canvas.height = height;
+    ctx.drawImage(image, x, y, width, height, 0, 0, width, height);
+
+    return new Promise((resolve) => {
+      canvas.toBlob((blob) => {
+        const croppedFile = new File([blob], "cropped.jpg", {
+          type: "image/jpeg",
+        });
+        resolve({ blob, croppedFile, url: URL.createObjectURL(blob) });
+      }, "image/jpeg");
+    });
+  };
+
+  const handleCropComplete = (croppedArea, croppedAreaPixels) => {
+    setCroppedAreaPixels(croppedAreaPixels);
+  };
+
+  const handleConfirmCrop = async () => {
+    const { croppedFile, url } = await getCroppedImage();
+    setSelectedFile(croppedFile);
+    setImagePreview(url);
+    setCropping(false);
+    toast.success("✅ Image cropped successfully!", { autoClose: 1500 });
+  };
+
   const handleCancel = () => {
-    setForm(user); // Reset form fields to original user data
-    setImagePreview(user?.profileImage || ""); // Reset image preview
-    setSelectedFile(null); // Remove selected image if any
+    setForm(user);
+    setImagePreview(user?.profileImage || "");
+    setSelectedFile(null);
     toast.info("Profile changes discarded!", { autoClose: 1500 });
   };
 
@@ -52,7 +89,7 @@ const Profile = ({ user, setUser }) => {
       const { data } = await axios.put("/users/update", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${user.token}`, // or get token from localStorage/context
+          Authorization: `Bearer ${user.token}`,
         },
       });
 
@@ -121,19 +158,56 @@ const Profile = ({ user, setUser }) => {
             />
           </div>
 
-          <button type="submit" className="update-btn">
+          <button type="submit" className="update_btn_profile">
             Update Profile
           </button>
 
           <button
             type="button"
-            className="update-btn cancel_btn_profile"
+            className="cancel_btn_profile"
             onClick={handleCancel}
           >
             Cancel Update
           </button>
         </form>
       </div>
+
+      {cropping && (
+        <div className="cropper-container">
+          <div className="cropper-wrapper">
+            <Cropper
+              image={imagePreview}
+              crop={crop}
+              zoom={zoom}
+              aspect={1}
+              onCropChange={setCrop}
+              onCropComplete={handleCropComplete}
+              onZoomChange={setZoom}
+            />
+            <div className="crop-controls">
+              <Slider
+                min={1}
+                max={3}
+                step={0.1}
+                value={zoom}
+                onChange={(e, zoom) => setZoom(zoom)}
+              />
+              <button
+                onClick={handleConfirmCrop}
+                className="confirm_btn_profile"
+              >
+                Confirm
+              </button>
+              <button
+                onClick={() => setCropping(false)}
+                className="cancel_btn_profile2"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
