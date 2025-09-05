@@ -1,6 +1,36 @@
-/* Navbar container */
+/* =========================================
+   THEME VARIABLES
+========================================= */
+:root {
+  /* Light Mode Colors */
+  --navbar-bg-light: #f97316;
+  --text-color-light: #fff;
+
+  /* Dark Mode Colors */
+  --navbar-bg-dark: #1a1a1a;
+  --text-color-dark: #f5f5f5;
+
+  /* Transition Speed */
+  --transition-speed: 0.3s;
+}
+
+/* Light Mode */
+body[data-theme="light"] {
+  background-color: #fff;
+  color: var(--text-color-light);
+}
+
+/* Dark Mode */
+body[data-theme="dark"] {
+  background-color: #121212;
+  color: var(--text-color-dark);
+}
+
+/* =========================================
+   NAVBAR STYLING
+========================================= */
 .navbar {
-  background-color: #f97316;
+  background-color: var(--navbar-bg-light);
   padding: 2rem 1.4rem;
   display: flex;
   justify-content: space-between;
@@ -8,22 +38,32 @@
   position: sticky;
   top: 0;
   z-index: 1000;
+  transition: background-color var(--transition-speed) ease-in-out;
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
 }
 
-/* Logo */
+/* Dark Mode Navbar */
+body[data-theme="dark"] .navbar {
+  background-color: var(--navbar-bg-dark);
+}
+
+/* =========================================
+   LOGO STYLING
+========================================= */
 .logo {
   font-size: 1.5rem;
   font-weight: bold;
   color: white;
   text-decoration: none;
-  transition: 0.3s ease-in-out;
+  transition: var(--transition-speed);
 }
 .logo:hover {
   color: black;
 }
 
-/* Nav links on desktop */
+/* =========================================
+   NAV LINKS
+========================================= */
 .nav-links {
   display: flex;
   gap: 2rem;
@@ -34,13 +74,23 @@
   text-decoration: none;
   font-weight: 500;
   font-size: 1.1rem;
-  transition: 0.3s ease-in-out;
+  transition: var(--transition-speed);
 }
 .nav-links li a:hover {
   color: black;
 }
 
-/* Hamburger icon */
+/* Dark Mode Link Color */
+body[data-theme="dark"] .nav-links li a {
+  color: var(--text-color-dark);
+}
+body[data-theme="dark"] .nav-links li a:hover {
+  color: #ff9800;
+}
+
+/* =========================================
+   HAMBURGER ICON
+========================================= */
 .mobile-navbar {
   display: flex;
   justify-content: space-between;
@@ -49,7 +99,7 @@
 }
 .shop_logo {
   color: #fff;
-  transition: 0.3s ease-in-out;
+  transition: var(--transition-speed);
   font-size: 1.5rem;
   font-weight: bold;
 }
@@ -68,8 +118,13 @@
   background-color: white;
   border-radius: 2px;
 }
+body[data-theme="dark"] .bar {
+  background-color: var(--text-color-dark);
+}
 
-/* Logout button */
+/* =========================================
+   LOGOUT BUTTON
+========================================= */
 .logout-btn-container {
   display: flex;
   align-items: center;
@@ -87,13 +142,54 @@
   font-weight: 500;
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
   margin-top: -5px;
+  transition: var(--transition-speed);
 }
 .logout_btn_navbar:hover {
   color: #000 !important;
-  transform: none;
 }
 
-/* Overlay */
+/* Dark Mode Logout */
+body[data-theme="dark"] .logout_btn_navbar {
+  color: var(--text-color-dark);
+}
+body[data-theme="dark"] .logout_btn_navbar:hover {
+  color: #ff9800 !important;
+}
+
+/* =========================================
+   THEME TOGGLE BUTTON 🌙☀️
+========================================= */
+.theme-toggle,
+.theme-toggle-mobile {
+  cursor: pointer;
+  font-size: 1.4rem;
+  margin-left: 10px;
+  transition: transform 0.3s ease-in-out, color 0.3s ease-in-out;
+  display: flex;
+  align-items: center;
+}
+
+/* Light Mode Icon */
+body[data-theme="light"] .theme-toggle,
+body[data-theme="light"] .theme-toggle-mobile {
+  color: white;
+}
+
+/* Dark Mode Icon */
+body[data-theme="dark"] .theme-toggle,
+body[data-theme="dark"] .theme-toggle-mobile {
+  color: #ffdd57;
+}
+
+/* Hover Animation */
+.theme-toggle:hover,
+.theme-toggle-mobile:hover {
+  transform: rotate(25deg) scale(1.1);
+}
+
+/* =========================================
+   OVERLAY
+========================================= */
 .overlay {
   position: fixed;
   top: 0;
@@ -111,13 +207,15 @@
   pointer-events: auto;
 }
 
-/* Mobile dropdown */
+/* =========================================
+   MOBILE DROPDOWN MENU
+========================================= */
 .dropdown-menu {
   position: fixed;
   top: -100vh;
   left: 0;
   width: 100%;
-  background-color: #f97316;
+  background-color: var(--navbar-bg-light);
   padding: 2rem 1.5rem;
   display: flex;
   flex-direction: column;
@@ -140,7 +238,20 @@
   top: 60px;
 }
 
-/* Profile image and initials */
+/* Dark Mode Dropdown */
+body[data-theme="dark"] .dropdown-menu {
+  background-color: var(--navbar-bg-dark);
+}
+body[data-theme="dark"] .dropdown-menu li a {
+  color: var(--text-color-dark);
+}
+body[data-theme="dark"] .dropdown-menu li a:hover {
+  color: #ff9800;
+}
+
+/* =========================================
+   PROFILE IMAGE & INITIALS
+========================================= */
 .profile-image-link {
   display: flex;
   align-items: center;
@@ -153,10 +264,13 @@
   border-radius: 50%;
   object-fit: cover;
   border: 2px solid white;
+  transition: transform 0.2s ease-in-out;
+}
+.profile-image:hover {
+  transform: scale(1.05);
 }
 .initials {
   background-color: transparent;
-  border: 3px solid #fff;
   color: #fff !important;
   width: 35px;
   height: 35px;
@@ -169,7 +283,13 @@
   border: 2px solid white;
 }
 
-/* ✅ Center profile icon on mobile */
+/* Dark Mode Profile Border */
+body[data-theme="dark"] .profile-image,
+body[data-theme="dark"] .initials {
+  border: 2px solid #ff9800;
+}
+
+/* Mobile Profile Icon Centered */
 .mobile-profile-icon {
   display: flex;
   justify-content: center;
@@ -188,19 +308,9 @@
   }
 }
 
-/* Logout button mobile adjustment */
-.lg_btn {
-  background: none !important;
-  margin-top: -4px;
-  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
-  font-size: 1.1rem;
-}
-.lg_btn:hover {
-  transition: none !important;
-  color: #000;
-}
-
-/* Cart badge */
+/* =========================================
+   CART BADGE
+========================================= */
 .cart_badge {
   background: red;
   color: white;
@@ -222,7 +332,9 @@
   }
 }
 
-/* Hide desktop-only elements in mobile */
+/* =========================================
+   RESPONSIVE ADJUSTMENTS
+========================================= */
 @media (max-width: 768px) {
   .nav-links,
   .logo {
@@ -240,18 +352,12 @@
     font-size: 1.2rem;
   }
 
-  .lg_btn:hover {
-    transition: none !important;
-    color: #000;
-  }
-
-  /* Override old profile image offset */
   .profile-image {
     margin-left: 0;
   }
 }
 
-/* Hide hamburger in desktop */
+/* Hide hamburger on desktop */
 @media (min-width: 769px) {
   .hamburger,
   .dropdown-menu,

@@ -1,0 +1,83 @@
+/* Container Styling */
+.admin-bill-container {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 25px;
+  background: #ffffff;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  text-align: center;
+  transition: all 0.3s ease-in-out;
+}
+
+/* Title Styling */
+.admin-title {
+  font-size: 26px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #ff6600;
+  text-transform: uppercase;
+}
+
+/* Buttons Container */
+.admin-buttons {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+/* Button Styling */
+.btn {
+  display: inline-block;
+  background-color: #ff6600;
+  color: #fff;
+  padding: 12px 20px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 8px;
+  text-decoration: none;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(255, 102, 0, 0.3);
+  transition: all 0.3s ease;
+  min-width: 180px;
+}
+
+/* Hover Effects */
+.btn:hover {
+  background-color: #e65c00;
+  transform: scale(1.05);
+  box-shadow: 0 6px 14px rgba(255, 102, 0, 0.4);
+}
+
+/* Small Screens (Tablets & Phones) */
+@media (max-width: 768px) {
+  .admin-bill-container {
+    max-width: 90%;
+    padding: 20px;
+  }
+
+  .admin-title {
+    font-size: 22px;
+  }
+
+  .btn {
+    font-size: 15px;
+    padding: 10px 16px;
+    min-width: 150px;
+  }
+}
+
+/* Extra Small Screens (Phones) */
+@media (max-width: 480px) {
+  .admin-buttons {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .btn {
+    width: 100%;
+    font-size: 14px;
+    padding: 12px;
+  }
+}

@@ -98,6 +98,11 @@ const AdminAllBill = () => {
         `Rs ${item.price * item.quantity}`,
       ]),
       styles: { font: "helvetica", fontSize: 11 },
+      headStyles: {
+        fillColor: [255, 102, 0],
+        textColor: [255, 255, 255],
+        fontStyle: "bold",
+      },
       margin: { left: 14, right: 14 },
     });
 

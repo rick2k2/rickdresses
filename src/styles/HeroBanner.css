@@ -1,3 +1,6 @@
+/* =========================================
+   HERO BANNER WITH LIGHT & DARK MODE SUPPORT
+========================================= */
 .hero_banner {
   display: flex;
   justify-content: center;
@@ -5,17 +8,45 @@
   flex-direction: column;
   background: linear-gradient(250deg, #f29252, rgb(245, 243, 246));
   padding: 70px;
+  text-align: center;
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
 }
 
+/* Dark Mode Background */
+body[data-theme="dark"] .hero_banner {
+  background: linear-gradient(250deg, #2a2a2a, #1a1a1a);
+}
+
+/* Hero Title */
 .hero_banner h2 {
   color: #ff6600;
+  font-size: 2.2rem;
+  margin-bottom: 10px;
+  transition: color 0.3s ease-in-out;
 }
+
+/* Dark Mode Title */
+body[data-theme="dark"] .hero_banner h2 {
+  color: #ff9800;
+}
+
+/* Hero Paragraph */
 .hero_banner p {
   color: #0e0c0c;
   padding: 15px;
   font-size: 1.5rem;
+  max-width: 700px;
+  line-height: 1.6;
+  transition: color 0.3s ease-in-out;
 }
+
+/* Dark Mode Paragraph */
+body[data-theme="dark"] .hero_banner p {
+  color: #f5f5f5;
+}
+
+/* Hero Banner Button */
 .herobanner_button {
   color: #fff;
   background: #ff6600;
@@ -26,8 +57,45 @@
   font-size: 1.2rem;
   outline: none;
   border: none;
-  transition: 0.8s ease-in-out;
+  transition: all 0.3s ease-in-out;
 }
+
+/* Light Mode Button Hover */
 .herobanner_button:hover {
-  box-shadow: 5px 8px 30px white;
+  background-color: #ff7d1a;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Dark Mode Button */
+body[data-theme="dark"] .herobanner_button {
+  background: #ff9800;
+  color: #121212;
+}
+
+/* Dark Mode Button Hover */
+body[data-theme="dark"] .herobanner_button:hover {
+  background-color: #ffc107;
+  color: #000;
+  box-shadow: 0px 4px 20px rgba(255, 255, 255, 0.3);
+}
+
+/* Responsive Hero Banner */
+@media (max-width: 768px) {
+  .hero_banner {
+    padding: 40px 20px;
+  }
+
+  .hero_banner h2 {
+    font-size: 1.8rem;
+  }
+
+  .hero_banner p {
+    font-size: 1.2rem;
+    padding: 10px;
+  }
+
+  .herobanner_button {
+    font-size: 1rem;
+    padding: 8px 20px;
+  }
 }

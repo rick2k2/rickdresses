@@ -1,10 +1,24 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import {
+  FaFacebookF,
+  FaInstagram,
+  FaYoutube,
+  FaMoon,
+  FaSun,
+} from "react-icons/fa";
 import "../styles/Footer.css";
 
 const Footer = () => {
   const [email, setEmail] = useState("");
   const [showPopup, setShowPopup] = useState(false);
+  const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
+
+  // ✅ Sync footer with navbar theme
+  useEffect(() => {
+    document.body.setAttribute("data-theme", theme);
+    localStorage.setItem("theme", theme);
+  }, [theme]);
 
   const handleSubscribe = (e) => {
     e.preventDefault();
@@ -14,28 +28,34 @@ const Footer = () => {
       return;
     }
 
-    // ✅ Show success popup
     setShowPopup(true);
-
-    // ✅ Reset email field after subscription
     setEmail("");
 
-    // ✅ Auto-close popup after 3 seconds
     setTimeout(() => {
       setShowPopup(false);
     }, 3000);
+  };
+
+  const toggleTheme = () => {
+    setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
   };
 
   return (
     <footer className="footer">
       <div className="footer-container">
         {/* Column 1 - Brand Info */}
-        <div className="footer-column">
+        <div className="footer-column footer-brand-column">
           <h3 className="footer_logo">Rick Dresses</h3>
-          <p>
+          <p className="footer-tagline">
             Classic ethnic & modern collections curated for every occasion.
             Designed with love from Bengal.
           </p>
+
+          {/* ✅ Moved Theme Toggle Button Below Slogan */}
+          <div className="footer-theme-toggle" onClick={toggleTheme}>
+            {theme === "light" ? <FaMoon /> : <FaSun />}
+            <span>{theme === "light" ? " Dark Mode" : " Light Mode"}</span>
+          </div>
         </div>
 
         {/* Column 2 - Quick Links */}
@@ -92,24 +112,31 @@ const Footer = () => {
         </div>
       </div>
 
-      {/* Social Media */}
+      {/* Social Media Icons */}
       <div className="social-icons">
         <a
           href="https://facebook.com"
           target="_blank"
           rel="noopener noreferrer"
+          className="social-icon"
         >
-          <img src="/assests/facebook.png" alt="Facebook" />
+          <FaFacebookF />
         </a>
         <a
           href="https://instagram.com"
           target="_blank"
           rel="noopener noreferrer"
+          className="social-icon"
         >
-          <img src="/assests/instagram.png" alt="Instagram" />
+          <FaInstagram />
         </a>
-        <a href="https://youtube.com" target="_blank" rel="noopener noreferrer">
-          <img src="/assests/youtube.png" alt="YouTube" />
+        <a
+          href="https://youtube.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="social-icon"
+        >
+          <FaYoutube />
         </a>
       </div>
 

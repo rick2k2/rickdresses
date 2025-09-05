@@ -1,16 +1,47 @@
+/* 🌗 Theme Variables */
+:root {
+  --light-bg: #fffdf8;
+  --light-card: #fff;
+  --light-text: #222;
+
+  --dark-bg: #1e1e1e;
+  --dark-card: #2a2a2a;
+  --dark-text: #f5f5f5;
+
+  --highlight: #ff6600;
+  --highlight-hover: #cc5900;
+}
+
+/* 🌞 Light Theme */
+body[data-theme="light"] {
+  background-color: var(--light-bg);
+  color: var(--light-text);
+}
+
+/* 🌙 Dark Theme */
+body[data-theme="dark"] {
+  background-color: var(--dark-bg);
+  color: var(--dark-text);
+}
+
 /* ------------------------------
    SHOP SECTION MAIN CONTAINER
 ------------------------------- */
 .shop-section {
   padding: 2rem;
-  background: linear-gradient(to bottom right, #fffdf8, #fff6ed);
   min-height: 100vh;
   font-family: "Segoe UI", sans-serif;
+  background: linear-gradient(to bottom right, #fffdf8, #fff6ed);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body[data-theme="dark"] .shop-section {
+  background: var(--dark-bg);
 }
 
 .shop-section h2 {
   font-size: 2.5rem;
-  color: #e66400;
+  color: var(--highlight);
   margin-bottom: 1.5rem;
   text-align: center;
   font-weight: 700;
@@ -18,7 +49,7 @@
 }
 
 /* ------------------------------
-   FILTERS BAR DESIGN
+   FILTERS BAR
 ------------------------------- */
 .filters {
   display: flex;
@@ -27,7 +58,7 @@
   gap: 12px;
   margin: 0 auto 2rem auto;
   padding: 15px 20px;
-  background: linear-gradient(250deg, #f29252, rgb(245, 243, 246));
+  background: linear-gradient(250deg, #f29252, #f5f3f6);
   border-radius: 12px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
   max-width: 1000px;
@@ -35,37 +66,36 @@
 }
 
 /* Search Box */
-.filters .search-input {
+.search-input {
   flex: 1;
   min-width: 220px;
   padding: 10px 14px;
-  border: 2px solid #ff6b00;
+  border: 2px solid var(--highlight);
   border-radius: 8px;
   font-size: 15px;
+  background-color: var(--light-card);
   transition: 0.3s ease;
-  background-color: #fff;
-  margin-top: 25px;
 }
 
-.filters .search-input:focus {
+.search-input:focus {
   outline: none;
   border-color: #ff8c1a;
   box-shadow: 0 0 6px rgba(255, 107, 0, 0.3);
 }
 
 /* Dropdowns */
-.filters .filter-select {
+.filter-select {
   padding: 10px 14px;
-  border: 2px solid #ff6b00;
+  border: 2px solid var(--highlight);
   border-radius: 8px;
   font-size: 15px;
-  background-color: #fff;
+  background-color: var(--light-card);
   cursor: pointer;
   min-width: 180px;
   transition: 0.3s ease;
 }
 
-.filters .filter-select:hover {
+.filter-select:hover {
   border-color: #ff8c1a;
   box-shadow: 0 0 6px rgba(255, 107, 0, 0.3);
 }
@@ -81,9 +111,8 @@
   margin: 0 auto;
 }
 
-/* Product Card */
 .product-card {
-  background-color: #fff;
+  background-color: var(--light-card);
   border-radius: 16px;
   overflow: hidden;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
@@ -92,6 +121,10 @@
   flex-direction: column;
   justify-content: space-between;
   padding-bottom: 1rem;
+}
+
+body[data-theme="dark"] .product-card {
+  background-color: var(--dark-card);
 }
 
 .product-card:hover {
@@ -108,13 +141,17 @@
 
 .product-card h3 {
   font-size: 1.3rem;
-  color: #333;
+  color: var(--light-text);
   margin: 0.8rem 1rem 0 1rem;
   font-weight: 600;
 }
 
+body[data-theme="dark"] .product-card h3 {
+  color: var(--dark-text);
+}
+
 /* ------------------------------
-   PRICE & DISCOUNT SECTION
+   PRICE & DISCOUNTS
 ------------------------------- */
 .price-section {
   margin: 10px 1rem;
@@ -122,13 +159,13 @@
 
 .offer-price {
   font-weight: bold;
-  color: #ff6600 !important;
+  color: var(--highlight);
   font-size: 1.2rem;
 }
 
 .original-price {
   text-decoration: line-through;
-  color: #888 !important;
+  color: #888;
   margin-left: 8px;
   font-size: 0.95rem;
 }
@@ -136,7 +173,7 @@
 .discount-badge {
   display: inline-block;
   background: #e8ffe8;
-  color: green !important;
+  color: green;
   font-size: 0.85rem;
   font-weight: bold;
   margin-top: 6px;
@@ -144,11 +181,14 @@
   border-radius: 6px;
 }
 
-/* Normal Price */
 .normal-price {
   font-weight: bold;
   font-size: 1.2rem;
-  color: #222;
+  color: var(--light-text);
+}
+
+body[data-theme="dark"] .normal-price {
+  color: var(--dark-text);
 }
 
 /* ------------------------------
@@ -161,15 +201,15 @@
 }
 
 .in-stock {
-  color: green !important;
+  color: green;
 }
 
 .out-of-stock {
-  color: red !important;
+  color: red;
 }
 
 .low-stock-badge {
-  color: #d9534f !important;
+  color: #d9534f;
   font-weight: bold;
   margin: 4px 1rem;
   font-size: 14px;
@@ -187,8 +227,7 @@
 }
 
 .product-buttons button {
-  flex: 1;
-  background-color: #e66400;
+  background-color: var(--highlight);
   color: #fff;
   border: none;
   padding: 10px 12px;
@@ -199,7 +238,7 @@
 }
 
 .product-buttons button:hover {
-  background-color: #cc5900;
+  background-color: var(--highlight-hover);
 }
 
 .disabled-btn {
@@ -207,7 +246,6 @@
   color: #666 !important;
   cursor: not-allowed;
   pointer-events: none;
-  border: none;
 }
 
 /* ------------------------------
@@ -223,7 +261,7 @@
 
 .pagination button {
   padding: 8px 14px;
-  background-color: #ff6600;
+  background-color: var(--highlight);
   color: white;
   border: none;
   border-radius: 6px;
@@ -233,7 +271,7 @@
 }
 
 .pagination button:hover {
-  background-color: #cc5900;
+  background-color: var(--highlight-hover);
 }
 
 .pagination button:disabled {
@@ -253,7 +291,7 @@
 
 .loader {
   border: 4px solid #f3f3f3;
-  border-top: 4px solid orange;
+  border-top: 4px solid var(--highlight);
   border-radius: 50%;
   width: 40px;
   height: 40px;
@@ -261,10 +299,7 @@
 }
 
 @keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
+  to {
     transform: rotate(360deg);
   }
 }
@@ -283,13 +318,12 @@
     padding: 12px;
     gap: 8px;
   }
-  .filters .search-input,
-  .filters .filter-select {
+
+  .search-input,
+  .filter-select {
     width: 100%;
   }
-  .filters .search-input {
-    margin-bottom: -1px;
-  }
+
   .product-grid {
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 1.5rem;
@@ -297,14 +331,6 @@
 
   .product-card img {
     height: 250px;
-  }
-
-  .product-buttons {
-    flex-direction: column;
-  }
-
-  .product-buttons button {
-    width: 100%;
   }
 }
 

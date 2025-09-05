@@ -3,10 +3,13 @@
   border: 1px solid #ccc;
   padding: 15px;
   border-radius: 10px;
-  background: linear-gradient(135deg, #ddd, #ff6600);
+  background: linear-gradient(to top, #1e0b00, #e84b0d);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  color: #fff;
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+}
+
+.contact-msg-card > p {
+  color: #fff;
 }
 
 .contact-msg-card textarea {

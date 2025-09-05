@@ -2,11 +2,18 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../styles/Navbar.css";
 import { toast } from "react-toastify";
+import { FaMoon, FaSun } from "react-icons/fa";
 
 const Navbar = ({ user, setUser, cartItems }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
   const navigate = useNavigate();
+
+  useEffect(() => {
+    document.body.setAttribute("data-theme", theme);
+    localStorage.setItem("theme", theme);
+  }, [theme]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -27,10 +34,13 @@ const Navbar = ({ user, setUser, cartItems }) => {
   const toggleMenu = () => setMenuOpen((prev) => !prev);
   const closeMenu = () => setMenuOpen(false);
 
+  const toggleTheme = () => {
+    setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
+  };
+
   const renderProfileIcon = () => {
     if (!user) return null;
 
-    // Display profile image if exists, otherwise initials
     if (user.profileImage) {
       return (
         <Link to="/profile" onClick={closeMenu} className="profile-image-link">
@@ -127,6 +137,13 @@ const Navbar = ({ user, setUser, cartItems }) => {
         ) : (
           <ul className="nav-links">
             {menuLinks}
+
+            {/* Light/Dark Mode Toggle After Logout */}
+            <li className="theme-toggle" onClick={toggleTheme}>
+              {theme === "light" ? <FaMoon /> : <FaSun />}
+            </li>
+
+            {/* Profile Icon Always Last */}
             {user && <li>{renderProfileIcon()}</li>}
           </ul>
         )}
@@ -140,6 +157,13 @@ const Navbar = ({ user, setUser, cartItems }) => {
       {isMobile && (
         <ul className={`dropdown-menu ${menuOpen ? "open" : ""}`}>
           {menuLinks}
+
+          {/* Theme toggle for mobile */}
+          <li className="theme-toggle-mobile" onClick={toggleTheme}>
+            {theme === "light" ? <FaMoon /> : <FaSun />}
+          </li>
+
+          {/* Profile Image at Last in Mobile */}
           {user && (
             <li className="mobile-profile-icon">{renderProfileIcon()}</li>
           )}

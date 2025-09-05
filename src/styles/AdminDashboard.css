@@ -6,7 +6,7 @@
 
 .admin-sidebar {
   width: 220px;
-  background: linear-gradient(180deg, #ff6a00, #ffb347);
+  background: linear-gradient(to top, #1e0b00, #e84b0d);
   padding: 25px 20px;
   color: #fff;
   min-height: 100vh;
@@ -63,11 +63,10 @@
 
 .stat-card {
   flex: 1;
-  background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+  background: linear-gradient(to top, #1e0b00, #e84b0d);
   padding: 25px;
   border-radius: 10px;
-  color: #333;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.07);
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.07);
   transition: transform 0.3s ease;
   min-width: 250px;
 }
@@ -79,12 +78,13 @@
 .stat-card h3 {
   margin-bottom: 10px;
   font-size: 18px;
-  color: #ff6a00;
+  color: #ffffff;
 }
 
 .stat-card p {
   font-size: 26px;
   font-weight: bold;
+  color: #ffffff;
 }
 .admin-loading {
   font-size: 18px;

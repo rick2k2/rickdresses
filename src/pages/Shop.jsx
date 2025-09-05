@@ -18,8 +18,23 @@ const Shop = ({ initialSearch = "" }) => {
   const [sortOrder, setSortOrder] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [categories, setCategories] = useState([]);
+  const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
 
   const PRODUCTS_PER_PAGE = isHome ? 8 : 20;
+
+  // Listen for theme changes from Navbar
+  useEffect(() => {
+    const handleThemeChange = () => {
+      const savedTheme = localStorage.getItem("theme") || "light";
+      setTheme(savedTheme);
+      document.body.setAttribute("data-theme", savedTheme);
+    };
+
+    handleThemeChange();
+    window.addEventListener("storage", handleThemeChange);
+
+    return () => window.removeEventListener("storage", handleThemeChange);
+  }, []);
 
   // Fetch products
   useEffect(() => {
@@ -127,7 +142,7 @@ const Shop = ({ initialSearch = "" }) => {
   };
 
   return (
-    <div className="shop-section">
+    <div className={`shop-section ${theme}`}>
       <h2>{isHome ? "Featured Products" : "Rick Dresses Shop"}</h2>
 
       <div className="filters">

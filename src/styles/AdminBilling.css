@@ -1,5 +1,4 @@
-/* AdminBilling.css */
-
+/* ===== Main Container ===== */
 .admin-billing {
   max-width: 700px;
   margin: 40px auto;
@@ -8,57 +7,71 @@
   border-radius: 16px;
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
   font-family: "Segoe UI", sans-serif;
+  transition: all 0.3s ease-in-out;
 }
 
+/* ===== Heading ===== */
 .admin-billing h2 {
   text-align: center;
   margin-bottom: 25px;
   color: #ff6600;
+  font-size: 26px;
+  font-weight: bold;
+  text-transform: uppercase;
 }
 
+/* ===== Input Fields ===== */
 .admin-billing form input[type="text"],
 .admin-billing form input[type="number"] {
   width: 100%;
-  padding: 10px 14px;
+  padding: 12px 14px;
   margin: 8px 0;
   border: 1px solid #ddd;
   border-radius: 8px;
   font-size: 16px;
-  transition: border-color 0.3s ease;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
+/* Focused Inputs */
 .admin-billing form input:focus {
   border-color: #ff6600;
   outline: none;
+  box-shadow: 0 0 6px rgba(255, 102, 0, 0.3);
 }
 
+/* ===== Billing Items Container ===== */
 .billing-items {
   margin: 20px 0;
 }
 
+/* ===== Single Billing Item ===== */
 .billing-item {
   display: grid;
   grid-template-columns: 2fr 1fr 1fr auto;
-  gap: 10px;
+  gap: 12px;
   align-items: center;
   margin-bottom: 12px;
+  transition: all 0.3s ease-in-out;
 }
 
+/* ===== Remove Button ===== */
 .remove-btn {
   background: #ff4d4d;
   color: #fff;
-  padding: 6px 10px;
+  padding: 6px 12px;
   border: none;
   border-radius: 8px;
   font-size: 18px;
   cursor: pointer;
-  transition: background 0.3s;
+  transition: background 0.3s ease, transform 0.2s ease;
 }
 
 .remove-btn:hover {
   background: #e60000;
+  transform: scale(1.05);
 }
 
+/* ===== Add Item Button ===== */
 button[type="button"] {
   display: inline-block;
   margin-top: 10px;
@@ -67,37 +80,111 @@ button[type="button"] {
   border: none;
   padding: 10px 18px;
   font-size: 15px;
+  font-weight: 600;
   border-radius: 10px;
   cursor: pointer;
-  transition: background 0.3s;
+  transition: background 0.3s ease, transform 0.2s ease;
 }
 
 button[type="button"]:hover {
   background: #ff8000;
+  transform: scale(1.03);
 }
 
+/* ===== Generate Bill Button ===== */
 .generate-btn {
   display: block;
   width: 100%;
   margin-top: 20px;
   background: #ff6600;
   color: white;
-  padding: 12px;
+  padding: 14px;
   font-size: 18px;
+  font-weight: bold;
   border: none;
   border-radius: 12px;
   cursor: pointer;
-  transition: background 0.3s;
+  transition: background 0.3s ease, transform 0.2s ease;
 }
 
 .generate-btn:hover {
   background: #e65c00;
+  transform: scale(1.02);
 }
 
+/* ===== Total Amount ===== */
 h3 {
   text-align: right;
   color: #333;
   margin-top: 20px;
   font-size: 20px;
   font-weight: bold;
+}
+
+/* =====================
+   📱 Mobile Responsive
+   ===================== */
+
+/* For Tablets */
+@media (max-width: 768px) {
+  .admin-billing {
+    max-width: 90%;
+    padding: 20px;
+  }
+
+  .admin-billing h2 {
+    font-size: 22px;
+  }
+
+  .billing-item {
+    grid-template-columns: 1.5fr 1fr 1fr auto;
+    gap: 10px;
+  }
+
+  .generate-btn {
+    font-size: 16px;
+    padding: 12px;
+  }
+
+  button[type="button"] {
+    font-size: 14px;
+    padding: 8px 14px;
+  }
+}
+
+/* For Small Phones */
+@media (max-width: 576px) {
+  .billing-item {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 12px;
+    background-color: #fafafa;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  }
+
+  .remove-btn {
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+    font-size: 16px;
+  }
+
+  button[type="button"] {
+    width: 100%;
+    font-size: 15px;
+    padding: 12px;
+  }
+
+  .generate-btn {
+    font-size: 16px;
+    padding: 12px;
+  }
+
+  h3 {
+    text-align: center;
+    font-size: 18px;
+    margin-top: 15px;
+  }
 }
